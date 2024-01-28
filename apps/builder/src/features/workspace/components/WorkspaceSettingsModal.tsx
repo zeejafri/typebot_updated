@@ -15,11 +15,11 @@ import {
   UsersIcon,
 } from '@/components/icons'
 import { EmojiOrImageIcon } from '@/components/EmojiOrImageIcon'
-import { User, WorkspaceRole } from '@typebot.io/prisma'
+import { User, Workspace, WorkspaceRole } from '@typebot.io/prisma'
 import { useState } from 'react'
 import { MembersList } from './MembersList'
 import { WorkspaceSettingsForm } from './WorkspaceSettingsForm'
-import { WorkspaceInApp, useWorkspace } from '../WorkspaceProvider'
+import { useWorkspace } from '../WorkspaceProvider'
 import packageJson from '../../../../../../package.json'
 import { UserPreferencesForm } from '@/features/account/components/UserPreferencesForm'
 import { MyAccountForm } from '@/features/account/components/MyAccountForm'
@@ -29,7 +29,7 @@ import { useTranslate } from '@tolgee/react'
 type Props = {
   isOpen: boolean
   user: User
-  workspace: WorkspaceInApp
+  workspace: Workspace
   onClose: () => void
 }
 
@@ -139,7 +139,8 @@ export const WorkspaceSettingsModal = ({
                   size="sm"
                   justifyContent="flex-start"
                   pl="4"
-                  overflow="auto"
+                  overflow="scroll"
+                  className="hide-scrollbar"
                 >
                   {t('workspace.settings.modal.menu.billingAndUsage.label')}
                 </Button>

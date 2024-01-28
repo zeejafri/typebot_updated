@@ -11,13 +11,13 @@ import {
 } from '@chakra-ui/react'
 import { GraphNavigation } from '@typebot.io/prisma'
 import React, { useEffect } from 'react'
+import { GraphNavigationRadioGroup } from './GraphNavigationRadioGroup'
 import { AppearanceRadioGroup } from './AppearanceRadioGroup'
 import { useUser } from '../hooks/useUser'
 import { ChevronDownIcon } from '@/components/icons'
 import { MoreInfoTooltip } from '@/components/MoreInfoTooltip'
 import { useTranslate, useTolgee } from '@tolgee/react'
 import { useRouter } from 'next/router'
-import { GraphNavigationRadioGroup } from './GraphNavigationRadioGroup'
 
 const localeHumanReadable = {
   en: 'English',
@@ -27,7 +27,6 @@ const localeHumanReadable = {
   'pt-BR': 'Português (BR)',
   ro: 'Română',
   es: 'Español',
-  it: 'Italiano',
 } as const
 
 export const UserPreferencesForm = () => {
@@ -39,8 +38,12 @@ export const UserPreferencesForm = () => {
 
   useEffect(() => {
     if (!user?.graphNavigation)
-      updateUser({ graphNavigation: GraphNavigation.MOUSE })
+      updateUser({ graphNavigation: GraphNavigation.TRACKPAD })
   }, [updateUser, user?.graphNavigation])
+
+  const changeGraphNavigation = async (value: string) => {
+    updateUser({ graphNavigation: value as GraphNavigation })
+  }
 
   const changeAppearance = async (value: string) => {
     updateUser({ preferredAppAppearance: value })
@@ -56,10 +59,6 @@ export const UserPreferencesForm = () => {
       undefined,
       { locale }
     )
-  }
-
-  const changeGraphNavigation = async (value: string) => {
-    updateUser({ graphNavigation: value as GraphNavigation })
   }
 
   const currentLanguage = getLanguage()
@@ -104,11 +103,10 @@ export const UserPreferencesForm = () => {
           {t('account.preferences.graphNavigation.heading')}
         </Heading>
         <GraphNavigationRadioGroup
-          defaultValue={user?.graphNavigation ?? GraphNavigation.MOUSE}
+          defaultValue={user?.graphNavigation ?? GraphNavigation.TRACKPAD}
           onChange={changeGraphNavigation}
         />
       </Stack>
-
       <Stack spacing={6}>
         <Heading size="md">
           {t('account.preferences.appearance.heading')}

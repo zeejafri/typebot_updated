@@ -1,6 +1,6 @@
 {
   "name": "@typebot.io/nextjs",
-  "version": "0.2.37",
+  "version": "0.2.28",
   "description": "Convenient library to display typebots on your Next.js website",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,8 +8,7 @@
   "scripts": {
     "dev": "rollup --watch --config rollup.config.js",
     "build": "rollup --config rollup.config.js",
-    "lint": "eslint --fix \"src/**/*.ts*\"",
-    "format:fix": "prettier --write ./src"
+    "lint": "eslint --fix \"src/**/*.ts*\""
   },
   "keywords": [],
   "author": "Baptiste Arnaud",
@@ -40,6 +39,6 @@
   },
   "peerDependencies": {
     "next": "12.x || 13.x || 14.x",
-    "react": "^16.0.0 || ^17.0.0 || ^18.0.0"
+    "react": "18.x"
   }
 }

@@ -17,12 +17,11 @@ import {
   SettingsIcon,
 } from '@/components/icons'
 import { useTypebot } from '../providers/TypebotProvider'
+import { useUser } from '@/features/account/hooks/useUser'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { EditorSettingsModal } from './EditorSettingsModal'
 import { parseDefaultPublicId } from '@/features/publish/helpers/parseDefaultPublicId'
-import { useTranslate } from '@tolgee/react'
-import { useUser } from '@/features/account/hooks/useUser'
-import { useRouter } from 'next/router'
 
 export const BoardMenuButton = (props: FlexProps) => {
   const { query } = useRouter()
@@ -30,7 +29,6 @@ export const BoardMenuButton = (props: FlexProps) => {
   const { user } = useUser()
   const [isDownloading, setIsDownloading] = useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { t } = useTranslate()
 
   useEffect(() => {
     if (user && !user.graphNavigation && !query.isFirstBot) onOpen()
@@ -54,7 +52,7 @@ export const BoardMenuButton = (props: FlexProps) => {
   }
 
   const redirectToDocumentation = () =>
-    window.open('https://docs.typebot.io/editor/graph', '_blank')
+    window.open('https://docs.typebot.io/get-started/overview', '_blank')
 
   return (
     <Flex
@@ -73,13 +71,13 @@ export const BoardMenuButton = (props: FlexProps) => {
         />
         <MenuList>
           <MenuItem icon={<BookIcon />} onClick={redirectToDocumentation}>
-            {t('editor.graph.menu.documentationItem.label')}
+            Documentation
           </MenuItem>
           <MenuItem icon={<SettingsIcon />} onClick={onOpen}>
-            {t('editor.graph.menu.editorSettingsItem.label')}
+            Editor settings
           </MenuItem>
           <MenuItem icon={<DownloadIcon />} onClick={downloadFlow}>
-            {t('editor.graph.menu.exportFlowItem.label')}
+            Export flow
           </MenuItem>
         </MenuList>
         <EditorSettingsModal isOpen={isOpen} onClose={onClose} />

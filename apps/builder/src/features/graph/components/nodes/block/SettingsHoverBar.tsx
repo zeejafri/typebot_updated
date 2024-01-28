@@ -9,7 +9,6 @@ import {
 import { BlockWithOptions } from '@typebot.io/schemas'
 import { getHelpDocUrl } from '@/features/graph/helpers/getHelpDocUrl'
 import { useForgedBlock } from '@/features/forge/hooks/useForgedBlock'
-import { useTranslate } from '@tolgee/react'
 
 type Props = {
   blockType: BlockWithOptions['type']
@@ -17,7 +16,6 @@ type Props = {
 }
 
 export const SettingsHoverBar = ({ blockType, onExpandClick }: Props) => {
-  const { t } = useTranslate()
   const { blockDef } = useForgedBlock(blockType)
   const helpDocUrl = getHelpDocUrl(blockType, blockDef)
   return (
@@ -48,7 +46,7 @@ export const SettingsHoverBar = ({ blockType, onExpandClick }: Props) => {
           href={helpDocUrl}
           isExternal
         >
-          {t('help')}
+          Help
         </Button>
       )}
     </HStack>

@@ -51,7 +51,7 @@ export const DropdownList = <T extends readonly any[]>({
       isRequired={isRequired}
       as={direction === 'column' ? Stack : HStack}
       justifyContent="space-between"
-      width={props.width === 'full' || label ? 'full' : 'auto'}
+      width={label ? 'full' : 'auto'}
       spacing={direction === 'column' ? 2 : 3}
     >
       {label && (
@@ -78,7 +78,7 @@ export const DropdownList = <T extends readonly any[]>({
         </MenuButton>
         <Portal>
           <MenuList maxW="500px" zIndex={1500}>
-            <Stack maxH={'35vh'} overflowY="auto" spacing="0">
+            <Stack maxH={'35vh'} overflowY="scroll" spacing="0">
               {items.map((item) => (
                 <MenuItem
                   key={item as unknown as string}

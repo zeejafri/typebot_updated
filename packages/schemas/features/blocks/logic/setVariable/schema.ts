@@ -1,9 +1,6 @@
-import { z } from '../../../../zod'
+import { z } from 'zod'
 import { blockBaseSchema } from '../../shared'
 import { LogicBlockType } from '../constants'
-import { extendZodWithOpenApi } from 'zod-openapi'
-
-extendZodWithOpenApi(z)
 
 const baseOptions = z.object({
   variableId: z.string().optional(),
@@ -27,7 +24,7 @@ const basicSetVariableOptionsSchema = baseOptions.extend({
 })
 
 const initialSetVariableOptionsSchema = baseOptions.extend({
-  type: z.undefined().openapi({ type: 'string' }),
+  type: z.undefined(),
   expressionToEvaluate: z.string().optional(),
   isCode: z.boolean().optional(),
 })

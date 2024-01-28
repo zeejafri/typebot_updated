@@ -12,7 +12,7 @@ export const saveClientLogs = publicProcedure
     openapi: {
       method: 'POST',
       path: '/v1/sessions/{sessionId}/clientLogs',
-      summary: 'Save logs',
+      summary: 'Save client logs',
     },
   })
   .input(

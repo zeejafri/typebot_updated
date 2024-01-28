@@ -23,7 +23,6 @@ import {
   PaymentProvider,
   defaultPaymentInputOptions,
 } from '@typebot.io/schemas/features/blocks/inputs/payment/constants'
-import { useTranslate } from '@tolgee/react'
 
 type Props = {
   options: PaymentInputBlock['options']
@@ -33,7 +32,6 @@ type Props = {
 export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
   const { workspace } = useWorkspace()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { t } = useTranslate()
 
   const updateProvider = (provider: PaymentProvider) => {
     onOptionsChange({
@@ -106,7 +104,7 @@ export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
   return (
     <Stack spacing={4}>
       <Stack>
-        <Text>{t('blocks.inputs.payment.settings.provider.label')}</Text>
+        <Text>Provider:</Text>
         <DropdownList
           onItemSelect={updateProvider}
           items={Object.values(PaymentProvider)}
@@ -114,7 +112,7 @@ export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
         />
       </Stack>
       <Stack>
-        <Text>{t('blocks.inputs.payment.settings.account.label')}</Text>
+        <Text>Account:</Text>
         {workspace && (
           <CredentialsDropdown
             type="stripe"
@@ -122,24 +120,19 @@ export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
             currentCredentialsId={options?.credentialsId}
             onCredentialsSelect={updateCredentials}
             onCreateNewClick={onOpen}
-            credentialsName={t(
-              'blocks.inputs.payment.settings.accountText.label',
-              {
-                provider: 'Stripe',
-              }
-            )}
+            credentialsName="Stripe account"
           />
         )}
       </Stack>
       <HStack>
         <TextInput
-          label={t('blocks.inputs.payment.settings.priceAmount.label')}
+          label="Price amount:"
           onChange={updateAmount}
           defaultValue={options?.amount}
           placeholder="30.00"
         />
         <Stack>
-          <Text>{t('blocks.inputs.payment.settings.currency.label')}</Text>
+          <Text>Currency:</Text>
           <Select
             placeholder="Select option"
             value={options?.currency ?? defaultPaymentInputOptions.currency}
@@ -154,14 +147,14 @@ export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
         </Stack>
       </HStack>
       <TextInput
-        label={t('blocks.inputs.settings.button.label')}
+        label="Button label:"
         onChange={updateButtonLabel}
         defaultValue={
           options?.labels?.button ?? defaultPaymentInputOptions.labels.button
         }
       />
       <TextInput
-        label={t('blocks.inputs.payment.settings.successMessage.label')}
+        label="Success message:"
         onChange={updateSuccessLabel}
         defaultValue={
           options?.labels?.success ?? defaultPaymentInputOptions.labels.success
@@ -170,38 +163,30 @@ export const PaymentSettings = ({ options, onOptionsChange }: Props) => {
       <Accordion allowToggle>
         <AccordionItem>
           <AccordionButton justifyContent="space-between">
-            {t('blocks.inputs.payment.settings.additionalInformation.label')}
+            Additional information
             <AccordionIcon />
           </AccordionButton>
           <AccordionPanel py={4} as={Stack} spacing="6">
             <TextInput
-              label={t('blocks.inputs.settings.description.label')}
+              label="Description:"
               defaultValue={options?.additionalInformation?.description}
               onChange={updateDescription}
-              placeholder={t(
-                'blocks.inputs.payment.settings.additionalInformation.description.placeholder.label'
-              )}
+              placeholder="A digital product"
             />
             <TextInput
-              label={t(
-                'blocks.inputs.payment.settings.additionalInformation.name.label'
-              )}
+              label="Name:"
               defaultValue={options?.additionalInformation?.name}
               onChange={updateName}
               placeholder="John Smith"
             />
             <TextInput
-              label={t(
-                'blocks.inputs.payment.settings.additionalInformation.email.label'
-              )}
+              label="Email:"
               defaultValue={options?.additionalInformation?.email}
               onChange={updateEmail}
               placeholder="john@gmail.com"
             />
             <TextInput
-              label={t(
-                'blocks.inputs.payment.settings.additionalInformation.phone.label'
-              )}
+              label="Phone number:"
               defaultValue={options?.additionalInformation?.phoneNumber}
               onChange={updatePhoneNumber}
               placeholder="+33XXXXXXXXX"

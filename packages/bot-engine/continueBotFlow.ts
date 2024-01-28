@@ -445,9 +445,7 @@ const parseReply =
           return block.options?.isRequired ?? defaultFileInputOptions.isRequired
             ? { status: 'fail' }
             : { status: 'skip' }
-        const urls = inputValue.split(', ')
-        const status = urls.some((url) => validateUrl(url)) ? 'success' : 'fail'
-        return { status, reply: inputValue }
+        return { status: 'success', reply: inputValue }
       }
       case InputBlockType.PAYMENT: {
         if (!inputValue) return { status: 'fail' }

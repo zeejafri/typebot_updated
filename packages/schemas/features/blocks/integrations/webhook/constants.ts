@@ -21,6 +21,3 @@ export const defaultWebhookBlockOptions = {
   isCustomBody: false,
   isExecutedOnClient: false,
 } as const satisfies WebhookBlockV6['options']
-
-export const defaultTimeout = 10
-export const maxTimeout = 120

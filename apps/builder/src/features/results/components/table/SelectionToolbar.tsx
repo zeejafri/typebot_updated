@@ -14,9 +14,9 @@ import React, { useState } from 'react'
 import { useToast } from '@/hooks/useToast'
 import { useResults } from '../../ResultsProvider'
 import { trpc } from '@/lib/trpc'
+import { parseColumnOrder } from '../../helpers/parseColumnsOrder'
 import { byId } from '@typebot.io/lib/utils'
-import { parseColumnsOrder } from '@typebot.io/lib/results/parseColumnsOrder'
-import { parseUniqueKey } from '@typebot.io/lib/parseUniqueKey'
+import { parseUniqueKey } from './ExportAllResultsModal'
 
 type Props = {
   selectedResultsId: string[]
@@ -70,7 +70,7 @@ export const SelectionToolbar = ({
       selectedResultsId.includes(data.id.plainText)
     )
 
-    const headerIds = parseColumnsOrder(
+    const headerIds = parseColumnOrder(
       typebot?.resultsTablePreferences?.columnsOrder,
       resultHeader
     )

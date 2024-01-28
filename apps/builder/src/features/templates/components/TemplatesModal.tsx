@@ -15,7 +15,7 @@ import {
 import { Standard } from '@typebot.io/nextjs'
 import { Typebot } from '@typebot.io/schemas'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useTemplates } from '../hooks/useTemplates'
+import { templates } from '../data'
 import { TemplateProps } from '../types'
 import { useToast } from '@/hooks/useToast'
 import { sendRequest } from '@typebot.io/lib'
@@ -37,11 +37,9 @@ export const TemplatesModal = ({
   const { t } = useTranslate()
   const templateCardBackgroundColor = useColorModeValue('white', 'gray.800')
   const [typebot, setTypebot] = useState<Typebot>()
-  const templates = useTemplates()
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateProps>(
     templates[0]
   )
-  const [isFirstTemplateLoaded, setIsFirstTemplateLoaded] = useState(false)
   const { showToast } = useToast()
 
   const fetchTemplate = useCallback(
@@ -52,16 +50,14 @@ export const TemplatesModal = ({
       )
       if (error)
         return showToast({ title: error.name, description: error.message })
-      setTypebot({ ...(data as Typebot), name: template.name })
+      setTypebot(data as Typebot)
     },
     [showToast]
   )
 
   useEffect(() => {
-    if (isFirstTemplateLoaded) return
-    setIsFirstTemplateLoaded(true)
     fetchTemplate(templates[0])
-  }, [fetchTemplate, templates, isFirstTemplateLoaded])
+  }, [fetchTemplate])
 
   const onUseThisTemplateClick = async () => {
     if (!typebot) return
@@ -86,7 +82,8 @@ export const TemplatesModal = ({
             borderRightWidth={1}
             justify="space-between"
             flexShrink={0}
-            overflowY="auto"
+            overflowY="scroll"
+            className="hide-scrollbar"
           >
             <Stack spacing={5}>
               <Stack spacing={2}>

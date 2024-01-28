@@ -1,30 +1,23 @@
-import { z } from '../../../zod'
+import { z } from 'zod'
 import {
   chatLogSchema,
   chatMessageSchema,
+  clientSideActionSchema,
   runtimeOptionsSchema,
   startTypebotSchema,
 } from '../schema'
 import { typebotV5Schema, typebotV6Schema } from '../../typebot'
 import { dynamicThemeSchema } from '../shared'
 import { inputBlockSchemas } from '../../blocks'
-import { extendZodWithOpenApi } from 'zod-openapi'
-import { clientSideActionSchema } from '../clientSideAction'
-
-extendZodWithOpenApi(z)
 
 export const startElementIdSchema = z.union([
   z.object({
     startGroupId: z.string().describe('Start chat from a specific group.'),
-    startEventId: z.never().optional().openapi({
-      type: 'string',
-    }),
+    startEventId: z.never().optional(),
   }),
   z.object({
     startEventId: z.string().describe('Start chat from a specific event.'),
-    startGroupId: z.never().optional().openapi({
-      type: 'string',
-    }),
+    startGroupId: z.never().optional(),
   }),
   z.object({}),
 ])
@@ -35,7 +28,7 @@ const startParamsSchema = z
     typebot: startTypebotSchema
       .or(z.string())
       .describe(
-        'Either a Typebot ID or a Typebot object. If you provide a Typebot object, it will be executed in preview mode. ([How can I find my typebot ID?](https://docs.typebot.io/api-reference#how-to-find-my-typebotid)).'
+        'Either a Typebot ID or a Typebot object. If you provide a Typebot object, it will be executed in preview mode. ([How can I find my typebot ID?](https://docs.typebot.io/api#how-to-find-my-typebotid)).'
       ),
     isPreview: z
       .boolean()

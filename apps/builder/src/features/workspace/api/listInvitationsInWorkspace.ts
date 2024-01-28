@@ -17,11 +17,7 @@ export const listInvitationsInWorkspace = authenticatedProcedure
   })
   .input(
     z.object({
-      workspaceId: z
-        .string()
-        .describe(
-          '[Where to find my workspace ID?](../how-to#how-to-find-my-workspaceid)'
-        ),
+      workspaceId: z.string(),
     })
   )
   .output(

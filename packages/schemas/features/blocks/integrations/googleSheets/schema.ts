@@ -1,4 +1,4 @@
-import { z } from '../../../../zod'
+import { z } from 'zod'
 import { IntegrationBlockType } from '../constants'
 import { GoogleSheetsAction, totalRowsToExtractOptions } from './constants'
 import { blockBaseSchema, credentialsBaseSchema } from '../../shared'
@@ -34,9 +34,7 @@ const rowsFilterComparisonSchema = z.object({
 
 const initialGoogleSheetsOptionsSchema = googleSheetsOptionsBaseSchema.merge(
   z.object({
-    action: z.undefined().openapi({
-      type: 'string',
-    }),
+    action: z.undefined(),
   })
 )
 

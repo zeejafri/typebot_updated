@@ -8,7 +8,6 @@ import {
   LogicalOperator,
   defaultConditionItemContent,
 } from '@typebot.io/schemas/features/blocks/logic/condition/constants'
-import { useTranslate } from '@tolgee/react'
 
 type Props = {
   condition: Condition | undefined
@@ -16,7 +15,6 @@ type Props = {
 }
 
 export const ConditionForm = ({ condition, onConditionChange }: Props) => {
-  const { t } = useTranslate()
   const handleComparisonsChange = (comparisons: Comparison[]) =>
     onConditionChange({ ...condition, comparisons })
   const handleLogicalOperatorChange = (logicalOperator: LogicalOperator) =>
@@ -38,9 +36,7 @@ export const ConditionForm = ({ condition, onConditionChange }: Props) => {
           />
         </Flex>
       )}
-      addLabel={t(
-        'blocks.inputs.button.buttonSettings.addComparisonButton.label'
-      )}
+      addLabel="Add a comparison"
     >
       {(props) => <ComparisonItem {...props} />}
     </TableList>

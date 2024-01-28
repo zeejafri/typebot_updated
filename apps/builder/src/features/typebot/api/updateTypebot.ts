@@ -51,21 +51,10 @@ export const updateTypebot = authenticatedProcedure
   })
   .input(
     z.object({
-      typebotId: z
-        .string()
-        .describe(
-          "[Where to find my bot's ID?](../how-to#how-to-find-my-typebotid)"
-        ),
+      typebotId: z.string(),
       typebot: z.union([
-        typebotV6Schema.pick(typebotUpdateSchemaPick).partial().openapi({
-          title: 'Typebot V6',
-        }),
-        typebotV5Schema._def.schema
-          .pick(typebotUpdateSchemaPick)
-          .partial()
-          .openapi({
-            title: 'Typebot V5',
-          }),
+        typebotV5Schema._def.schema.pick(typebotUpdateSchemaPick).partial(),
+        typebotV6Schema.pick(typebotUpdateSchemaPick).partial(),
       ]),
       updatedAt: z
         .date()

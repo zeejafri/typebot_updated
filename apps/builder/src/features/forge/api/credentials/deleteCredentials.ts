@@ -11,6 +11,11 @@ export const deleteCredentials = authenticatedProcedure
       workspaceId: z.string(),
     })
   )
+  .output(
+    z.object({
+      credentialsId: z.string(),
+    })
+  )
   .mutation(
     async ({ input: { credentialsId, workspaceId }, ctx: { user } }) => {
       const workspace = await prisma.workspace.findFirst({

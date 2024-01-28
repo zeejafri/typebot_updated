@@ -16,7 +16,6 @@ type Props = {
   clientSideActions: ContinueChatResponse['clientSideActions']
   visitedEdges: VisitedEdge[]
   forceCreateSession?: boolean
-  hasCustomEmbedBubble?: boolean
 }
 
 export const saveStateToDatabase = async ({
@@ -26,15 +25,12 @@ export const saveStateToDatabase = async ({
   clientSideActions,
   forceCreateSession,
   visitedEdges,
-  hasCustomEmbedBubble,
 }: Props) => {
   const containsSetVariableClientSideAction = clientSideActions?.some(
     (action) => action.expectsDedicatedReply
   )
 
-  const isCompleted = Boolean(
-    !input && !containsSetVariableClientSideAction && !hasCustomEmbedBubble
-  )
+  const isCompleted = Boolean(!input && !containsSetVariableClientSideAction)
 
   const resultId = state.typebotsQueue[0].resultId
 

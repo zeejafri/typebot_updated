@@ -1,7 +1,7 @@
 import { createContext } from '@/helpers/server/context'
 import * as Sentry from '@sentry/nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { createOpenApiNextHandler } from '@lilyrose2798/trpc-openapi'
+import { createOpenApiNextHandler } from 'trpc-openapi'
 import cors from 'nextjs-cors'
 import { publicRouter } from '@/helpers/server/routers/publicRouter'
 

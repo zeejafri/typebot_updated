@@ -35,7 +35,6 @@ export type TextInputProps = {
   placeholder?: string
   isDisabled?: boolean
   direction?: 'row' | 'column'
-  width?: 'full'
 } & Pick<
   InputProps,
   | 'autoComplete'
@@ -67,7 +66,6 @@ export const TextInput = forwardRef(function TextInput(
     size,
     maxWidth,
     direction = 'column',
-    width,
   }: TextInputProps,
   ref
 ) {
@@ -143,7 +141,7 @@ export const TextInput = forwardRef(function TextInput(
       isRequired={isRequired}
       as={direction === 'column' ? Stack : HStack}
       justifyContent="space-between"
-      width={label || width === 'full' ? 'full' : 'auto'}
+      width={label ? 'full' : 'auto'}
       spacing={direction === 'column' ? 2 : 3}
     >
       {label && (

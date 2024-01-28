@@ -96,7 +96,6 @@ export const CreateNewTypebotButtons = () => {
       createTypebot({
         workspaceId: workspace.id,
         typebot: {
-          name: t('typebots.defaultName'),
           folderId,
         },
       })

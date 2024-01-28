@@ -109,7 +109,7 @@ export const ConditionItemNode = ({ item, isMouseOver, indices }: Props) => {
           <PopoverArrow />
           <PopoverBody
             py="6"
-            overflowY="auto"
+            overflowY="scroll"
             maxH="400px"
             shadow="lg"
             ref={ref}

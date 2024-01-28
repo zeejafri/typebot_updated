@@ -300,8 +300,6 @@ test('API chat execution should work on published bot', async ({ request }) => {
         {
           data: {
             message: 'Hey',
-            isStreamEnabled: false,
-            isOnlyRegistering: false,
           } satisfies Omit<StartChatInput, 'publicId'>,
         }
       )

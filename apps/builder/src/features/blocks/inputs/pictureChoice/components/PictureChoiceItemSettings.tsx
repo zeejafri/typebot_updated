@@ -15,7 +15,6 @@ import { SwitchWithRelatedSettings } from '@/components/SwitchWithRelatedSetting
 import { ConditionForm } from '@/features/blocks/logic/condition/components/ConditionForm'
 import { Condition } from '@typebot.io/schemas'
 import { LogicalOperator } from '@typebot.io/schemas/features/blocks/logic/condition/constants'
-import { useTranslate } from '@tolgee/react'
 
 type Props = {
   workspaceId: string
@@ -32,8 +31,6 @@ export const PictureChoiceItemSettings = ({
   item,
   onItemChange,
 }: Props) => {
-  const { t } = useTranslate()
-
   const updateTitle = (title: string) => onItemChange({ ...item, title })
 
   const updateImage = (pictureSrc: string) => {
@@ -64,17 +61,13 @@ export const PictureChoiceItemSettings = ({
   return (
     <Stack spacing={4}>
       <HStack>
-        <Text fontWeight="medium">
-          {t('blocks.inputs.picture.itemSettings.image.label')}
-        </Text>
+        <Text fontWeight="medium">Image:</Text>
         <Popover isLazy>
           {({ onClose }) => (
             <>
               <PopoverTrigger>
                 <Button size="sm">
-                  {item.pictureSrc
-                    ? t('blocks.inputs.picture.itemSettings.image.change.label')
-                    : t('blocks.inputs.picture.itemSettings.image.pick.label')}
+                  {item.pictureSrc ? 'Change image' : 'Pick an image'}
                 </Button>
               </PopoverTrigger>
               <PopoverContent p="4" w="500px">
@@ -98,17 +91,17 @@ export const PictureChoiceItemSettings = ({
         </Popover>
       </HStack>
       <TextInput
-        label={t('blocks.inputs.picture.itemSettings.title.label')}
+        label="Title:"
         defaultValue={item.title}
         onChange={updateTitle}
       />
       <Textarea
-        label={t('blocks.inputs.settings.description.label')}
+        label="Description:"
         defaultValue={item.description}
         onChange={updateDescription}
       />
       <SwitchWithRelatedSettings
-        label={t('blocks.inputs.settings.displayCondition.label')}
+        label="Display condition"
         initialValue={item.displayCondition?.isEnabled ?? false}
         onCheckChange={updateIsDisplayConditionEnabled}
       >

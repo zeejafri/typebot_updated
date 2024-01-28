@@ -11,6 +11,7 @@ import {
   googleSheetsCredentialsSchema,
   stripeCredentialsSchema,
 } from '@typebot.io/schemas'
+import { googleCalendarCredentialsSchema } from '@typebot.io/schemas'
 
 export const listCredentials = authenticatedProcedure
   .meta({
@@ -30,7 +31,8 @@ export const listCredentials = authenticatedProcedure
         .or(googleSheetsCredentialsSchema.shape.type)
         .or(openAICredentialsSchema.shape.type)
         .or(whatsAppCredentialsSchema.shape.type)
-        .or(zemanticAiCredentialsSchema.shape.type),
+        .or(zemanticAiCredentialsSchema.shape.type)
+        .or(googleCalendarCredentialsSchema.shape.type),
     })
   )
   .output(

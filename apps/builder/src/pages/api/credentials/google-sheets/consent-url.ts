@@ -1,6 +1,7 @@
-import { env } from '@typebot.io/env'
+//import { env } from '@typebot.io/env'
 import { OAuth2Client } from 'google-auth-library'
 import { NextApiRequest, NextApiResponse } from 'next'
+
 
 export const googleSheetsScopes = [
   'https://www.googleapis.com/auth/userinfo.email',
@@ -11,9 +12,9 @@ export const googleSheetsScopes = [
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     const oauth2Client = new OAuth2Client(
-      env.GOOGLE_CLIENT_ID,
-      env.GOOGLE_CLIENT_SECRET,
-      `${env.NEXTAUTH_URL}/api/credentials/google-sheets/callback`
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET,
+      `${process.env.NEXTAUTH_URL}/api/credentials/google-sheets/callback`
     )
     const url = oauth2Client.generateAuthUrl({
       access_type: 'offline',

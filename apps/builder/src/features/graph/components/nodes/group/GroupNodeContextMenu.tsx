@@ -1,24 +1,25 @@
 import { MenuList, MenuItem } from '@chakra-ui/react'
 import { CopyIcon, TrashIcon } from '@/components/icons'
-import { useTranslate } from '@tolgee/react'
+import { useTypebot } from '@/features/editor/providers/TypebotProvider'
 
-export const GroupNodeContextMenu = () => {
-  const { t } = useTranslate()
+export const GroupNodeContextMenu = ({
+  groupIndex,
+}: {
+  groupIndex: number
+}) => {
+  const { deleteGroup, duplicateGroup } = useTypebot()
 
-  const handleDeleteClick = () =>
-    dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace' }))
+  const handleDeleteClick = () => deleteGroup(groupIndex)
 
-  const handleDuplicateClick = () => {
-    dispatchEvent(new KeyboardEvent('keydown', { key: 'c', metaKey: true }))
-  }
+  const handleDuplicateClick = () => duplicateGroup(groupIndex)
 
   return (
     <MenuList>
       <MenuItem icon={<CopyIcon />} onClick={handleDuplicateClick}>
-        {t('copy')}
+        Duplicate
       </MenuItem>
       <MenuItem icon={<TrashIcon />} onClick={handleDeleteClick}>
-        {t('delete')}
+        Delete
       </MenuItem>
     </MenuList>
   )

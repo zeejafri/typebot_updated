@@ -2,11 +2,10 @@ import prisma from '@typebot.io/lib/prisma'
 import { canReadTypebots } from '@/helpers/databaseRules'
 import { authenticatedProcedure } from '@/helpers/server/trpc'
 import { TRPCError } from '@trpc/server'
-import { Typebot } from '@typebot.io/schemas'
+import { Block, Typebot } from '@typebot.io/schemas'
 import { z } from 'zod'
 import { fetchLinkedTypebots } from '@/features/blocks/logic/typebotLink/helpers/fetchLinkedTypebots'
-import { parseSampleResult } from '@typebot.io/bot-engine/blocks/integrations/webhook/parseSampleResult'
-import { getBlockById } from '@typebot.io/lib/getBlockById'
+import { parseResultExample } from '../helpers/parseResultExample'
 
 export const getResultExample = authenticatedProcedure
   .meta({
@@ -28,7 +27,15 @@ export const getResultExample = authenticatedProcedure
   )
   .output(
     z.object({
-      resultExample: z.record(z.any()).describe('Can contain any fields.'),
+      resultExample: z
+        .object({
+          message: z.literal(
+            'This is a sample result, it has been generated ⬇️'
+          ),
+          'Submitted at': z.string(),
+        })
+        .and(z.record(z.string().optional()))
+        .describe('Can contain any fields.'),
     })
   )
   .query(async ({ input: { typebotId, blockId }, ctx: { user } }) => {
@@ -45,17 +52,20 @@ export const getResultExample = authenticatedProcedure
     if (!typebot)
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Typebot not found' })
 
-    const { group } = getBlockById(blockId, typebot.groups)
+    const block = typebot.groups
+      .flatMap<Block>((group) => group.blocks)
+      .find((block) => block.id === blockId)
 
-    if (!group)
+    if (!block)
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Block not found' })
 
     const linkedTypebots = await fetchLinkedTypebots(typebot, user)
 
     return {
-      resultExample: await parseSampleResult(typebot, linkedTypebots)(
-        group.id,
-        typebot.variables
-      ),
+      resultExample: await parseResultExample({
+        typebot,
+        linkedTypebots,
+        userEmail: user.email ?? 'test@email.com',
+      })(block.id),
     }
   })

@@ -29,7 +29,7 @@ export const sendMessageV1 = publicProcedure
   .mutation(
     async ({
       input: { sessionId, message, startParams, clientLogs },
-      ctx: { user, origin, res },
+      ctx: { user },
     }) => {
       const session = sessionId ? await getSession(sessionId) : null
 
@@ -67,7 +67,7 @@ export const sendMessageV1 = publicProcedure
               ? {
                   type: 'preview',
                   isOnlyRegistering: startParams.isOnlyRegistering ?? false,
-                  isStreamEnabled: startParams.isStreamEnabled ?? false,
+                  isStreamEnabled: startParams.isStreamEnabled,
                   startFrom:
                     'startGroupId' in startParams && startParams.startGroupId
                       ? {
@@ -95,7 +95,7 @@ export const sendMessageV1 = publicProcedure
               : {
                   type: 'live',
                   isOnlyRegistering: startParams.isOnlyRegistering ?? false,
-                  isStreamEnabled: startParams.isStreamEnabled ?? false,
+                  isStreamEnabled: startParams.isStreamEnabled,
                   publicId: startParams.typebot,
                   prefilledVariables: startParams.prefilledVariables,
                   resultId: startParams.resultId,
@@ -103,21 +103,6 @@ export const sendMessageV1 = publicProcedure
                 },
           message,
         })
-
-        if (startParams.isPreview || typeof startParams.typebot !== 'string') {
-          if (
-            newSessionState.allowedOrigins &&
-            newSessionState.allowedOrigins.length > 0
-          ) {
-            if (origin && newSessionState.allowedOrigins.includes(origin))
-              res.setHeader('Access-Control-Allow-Origin', origin)
-            else
-              res.setHeader(
-                'Access-Control-Allow-Origin',
-                newSessionState.allowedOrigins[0]
-              )
-          }
-        }
 
         const allLogs = clientLogs ? [...(logs ?? []), ...clientLogs] : logs
 
@@ -133,9 +118,6 @@ export const sendMessageV1 = publicProcedure
               logs: allLogs,
               clientSideActions,
               visitedEdges,
-              hasCustomEmbedBubble: messages.some(
-                (message) => message.type === 'custom-embed'
-              ),
             })
 
         return {
@@ -155,19 +137,6 @@ export const sendMessageV1 = publicProcedure
           clientSideActions,
         }
       } else {
-        if (
-          session.state.allowedOrigins &&
-          session.state.allowedOrigins.length > 0
-        ) {
-          if (origin && session.state.allowedOrigins.includes(origin))
-            res.setHeader('Access-Control-Allow-Origin', origin)
-          else
-            res.setHeader(
-              'Access-Control-Allow-Origin',
-              session.state.allowedOrigins[0]
-            )
-        }
-
         const {
           messages,
           input,
@@ -190,9 +159,6 @@ export const sendMessageV1 = publicProcedure
             logs: allLogs,
             clientSideActions,
             visitedEdges,
-            hasCustomEmbedBubble: messages.some(
-              (message) => message.type === 'custom-embed'
-            ),
           })
 
         return {

@@ -35,6 +35,7 @@ export const Standard = (
   const processIncomingEvent = (event: MessageEvent<CommandData>) => {
     const { data } = event
     if (!data.isFromTypebot) return
+    if (data.command === 'unmount') setIsBotDisplayed(false)
   }
 
   onCleanup(() => {

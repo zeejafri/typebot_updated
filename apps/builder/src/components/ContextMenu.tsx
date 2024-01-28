@@ -17,7 +17,6 @@ import {
 } from '@chakra-ui/react'
 
 export interface ContextMenuProps<T extends HTMLElement> {
-  onOpen?: () => void
   renderMenu: () => JSX.Element | null
   children: (
     ref: MutableRefObject<T | null>,
@@ -62,7 +61,6 @@ export function ContextMenu<T extends HTMLElement = HTMLElement>(
       if (e.currentTarget === targetRef.current) {
         e.preventDefault()
         e.stopPropagation()
-        props.onOpen?.()
         setIsOpened(true)
         setPosition([e.pageX, e.pageY])
       } else {

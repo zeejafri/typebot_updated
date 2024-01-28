@@ -6,7 +6,6 @@ import { SwitchWithLabel } from '@/components/inputs/SwitchWithLabel'
 import { TextInput } from '@/components/inputs'
 import { VariableSearchInput } from '@/components/inputs/VariableSearchInput'
 import { defaultRatingInputOptions } from '@typebot.io/schemas/features/blocks/inputs/rating/constants'
-import { useTranslate } from '@tolgee/react'
 
 type Props = {
   options: RatingInputBlock['options']
@@ -14,8 +13,6 @@ type Props = {
 }
 
 export const RatingInputSettings = ({ options, onOptionsChange }: Props) => {
-  const { t } = useTranslate()
-
   const handleLengthChange = (length: number) =>
     onOptionsChange({ ...options, length })
 
@@ -55,7 +52,7 @@ export const RatingInputSettings = ({ options, onOptionsChange }: Props) => {
     <Stack spacing={4}>
       <Stack>
         <FormLabel mb="0" htmlFor="button">
-          {t('blocks.inputs.rating.settings.maximum.label')}
+          Maximum:
         </FormLabel>
         <DropdownList
           onItemSelect={handleLengthChange}
@@ -66,7 +63,7 @@ export const RatingInputSettings = ({ options, onOptionsChange }: Props) => {
 
       <Stack>
         <FormLabel mb="0" htmlFor="button">
-          {t('blocks.inputs.rating.settings.type.label')}
+          Type:
         </FormLabel>
         <DropdownList
           onItemSelect={handleTypeChange}
@@ -79,7 +76,7 @@ export const RatingInputSettings = ({ options, onOptionsChange }: Props) => {
 
       {options?.buttonType === 'Icons' && (
         <SwitchWithLabel
-          label={t('blocks.inputs.rating.settings.customIcon.label')}
+          label="Custom icon?"
           initialValue={
             options?.customIcon?.isEnabled ??
             defaultRatingInputOptions.customIcon.isEnabled
@@ -89,43 +86,33 @@ export const RatingInputSettings = ({ options, onOptionsChange }: Props) => {
       )}
       {options?.buttonType === 'Icons' && options.customIcon?.isEnabled && (
         <TextInput
-          label={t('blocks.inputs.rating.settings.iconSVG.label')}
+          label="Icon SVG:"
           defaultValue={options.customIcon.svg}
           onChange={handleIconSvgChange}
           placeholder="<svg>...</svg>"
         />
       )}
       <TextInput
-        label={t('blocks.inputs.rating.settings.rateLabel.label', {
-          rate: options?.buttonType === 'Icons' ? '1' : '0',
-        })}
+        label={`${options?.buttonType === 'Icons' ? '1' : '0'} label:`}
         defaultValue={options?.labels?.left}
         onChange={handleLeftLabelChange}
-        placeholder={t(
-          'blocks.inputs.rating.settings.notLikely.placeholder.label'
-        )}
+        placeholder="Not likely at all"
       />
       <TextInput
-        label={t('blocks.inputs.rating.settings.rateLabel.label', {
-          rate: length,
-        })}
+        label={`${length} label:`}
         defaultValue={options?.labels?.right}
         onChange={handleRightLabelChange}
-        placeholder={t(
-          'blocks.inputs.rating.settings.extremelyLikely.placeholder.label'
-        )}
+        placeholder="Extremely likely"
       />
       <SwitchWithLabel
-        label={t('blocks.inputs.rating.settings.oneClickSubmit.label')}
-        moreInfoContent={t(
-          'blocks.inputs.rating.settings.oneClickSubmit.infoText.label'
-        )}
+        label="One click submit"
+        moreInfoContent='If enabled, the answer will be submitted as soon as the user clicks on a rating instead of showing the "Send" button.'
         initialValue={isOneClickSubmitEnabled}
         onCheckChange={handleOneClickSubmitChange}
       />
       {!isOneClickSubmitEnabled && (
         <TextInput
-          label={t('blocks.inputs.settings.button.label')}
+          label="Button label:"
           defaultValue={
             options?.labels?.button ?? defaultRatingInputOptions.labels.button
           }
@@ -134,7 +121,7 @@ export const RatingInputSettings = ({ options, onOptionsChange }: Props) => {
       )}
       <Stack>
         <FormLabel mb="0" htmlFor="variable">
-          {t('blocks.inputs.settings.saveAnswer.label')}
+          Save answer in a variable:
         </FormLabel>
         <VariableSearchInput
           initialVariableId={options?.variableId}

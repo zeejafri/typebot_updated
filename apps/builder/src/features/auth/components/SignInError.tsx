@@ -17,10 +17,9 @@ export const SignInError = ({ error }: Props) => {
     OAuthAccountNotLinked: t('auth.error.oauthNotLinked'),
     default: t('auth.error.unknown'),
   }
-  if (!errors[error]) return null
   return (
     <Alert status="error" variant="solid" rounded="md">
-      {errors[error]}
+      {errors[error] ?? errors[error]}
     </Alert>
   )
 }

@@ -17,7 +17,6 @@ import { runtimes } from '../data'
 import { PreviewDrawerBody } from './PreviewDrawerBody'
 import { useDrag } from '@use-gesture/react'
 import { ResizeHandle } from './ResizeHandle'
-import { useTranslate } from '@tolgee/react'
 
 const preferredRuntimeKey = 'preferredRuntime'
 
@@ -31,7 +30,6 @@ const getDefaultRuntime = (typebotId?: string) => {
 
 export const PreviewDrawer = () => {
   const { typebot, save, isSavingLoading } = useTypebot()
-  const { t } = useTranslate()
   const { setRightPanel } = useEditor()
   const { setPreviewingBlock } = useGraph()
   const [width, setWidth] = useState(500)
@@ -105,7 +103,7 @@ export const PreviewDrawer = () => {
                 isLoading={isSavingLoading}
                 variant="ghost"
               >
-                {t('preview.restartButton.label')}
+                Restart
               </Button>
             ) : null}
           </HStack>

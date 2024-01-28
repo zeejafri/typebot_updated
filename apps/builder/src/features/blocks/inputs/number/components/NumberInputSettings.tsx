@@ -1,7 +1,6 @@
 import { TextInput, NumberInput } from '@/components/inputs'
 import { VariableSearchInput } from '@/components/inputs/VariableSearchInput'
 import { FormLabel, Stack } from '@chakra-ui/react'
-import { useTranslate } from '@tolgee/react'
 import { NumberInputBlock, Variable } from '@typebot.io/schemas'
 import { defaultNumberInputOptions } from '@typebot.io/schemas/features/blocks/inputs/number/constants'
 import React from 'react'
@@ -12,7 +11,6 @@ type Props = {
 }
 
 export const NumberInputSettings = ({ options, onOptionsChange }: Props) => {
-  const { t } = useTranslate()
   const handlePlaceholderChange = (placeholder: string) =>
     onOptionsChange({ ...options, labels: { ...options?.labels, placeholder } })
   const handleButtonLabelChange = (button: string) =>
@@ -33,7 +31,7 @@ export const NumberInputSettings = ({ options, onOptionsChange }: Props) => {
   return (
     <Stack spacing={4}>
       <TextInput
-        label={t('blocks.inputs.settings.placeholder.label')}
+        label="Placeholder:"
         defaultValue={
           options?.labels?.placeholder ??
           defaultNumberInputOptions.labels.placeholder
@@ -41,30 +39,30 @@ export const NumberInputSettings = ({ options, onOptionsChange }: Props) => {
         onChange={handlePlaceholderChange}
       />
       <TextInput
-        label={t('blocks.inputs.settings.button.label')}
+        label="Button label:"
         defaultValue={
           options?.labels?.button ?? defaultNumberInputOptions.labels.button
         }
         onChange={handleButtonLabelChange}
       />
       <NumberInput
-        label={t('blocks.inputs.settings.min.label')}
+        label="Min:"
         defaultValue={options?.min}
         onValueChange={handleMinChange}
       />
       <NumberInput
-        label={t('blocks.inputs.settings.max.label')}
+        label="Max:"
         defaultValue={options?.max}
         onValueChange={handleMaxChange}
       />
       <NumberInput
-        label={t('blocks.inputs.number.settings.step.label')}
+        label="Step:"
         defaultValue={options?.step}
         onValueChange={handleStepChange}
       />
       <Stack>
         <FormLabel mb="0" htmlFor="variable">
-          {t('blocks.inputs.settings.saveAnswer.label')}
+          Save answer in a variable:
         </FormLabel>
         <VariableSearchInput
           initialVariableId={options?.variableId}

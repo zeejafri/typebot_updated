@@ -1,5 +1,6 @@
 export * from './chatwoot'
 export * from './googleAnalytics'
+export * from './googleCalendar'
 export * from './googleSheets'
 export * from './makeCom'
 export * from './pabblyConnect'

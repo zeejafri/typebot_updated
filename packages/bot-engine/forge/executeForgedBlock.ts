@@ -70,7 +70,6 @@ export const executeForgedBlock = async (
       outgoingEdgeId: block.outgoingEdgeId,
       clientSideActions: [
         {
-          type: 'stream',
           expectsDedicatedReply: true,
           stream: true,
         },
@@ -101,7 +100,6 @@ export const executeForgedBlock = async (
         newSessionState.typebotsQueue[0].typebot.variables,
         params
       )(text),
-    list: () => newSessionState.typebotsQueue[0].typebot.variables,
   }
   let logs: NonNullable<ContinueChatResponse['logs']> = []
   const logsStore: LogsStore = {
@@ -132,9 +130,11 @@ export const executeForgedBlock = async (
 
   const clientSideActions: ExecuteIntegrationResponse['clientSideActions'] = []
 
-  if (action?.run?.web?.parseFunction) {
+  if (
+    action?.run?.web?.parseFunction &&
+    (state.typebotsQueue[0].resultId || !blockDef.isDisabledInPreview)
+  ) {
     clientSideActions.push({
-      type: 'codeToExecute',
       codeToExecute: action?.run?.web?.parseFunction({
         options: parsedOptions,
       }),

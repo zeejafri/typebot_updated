@@ -1,4 +1,4 @@
-import { z } from '../../../../zod'
+import { z } from 'zod'
 import { variableStringSchema } from '../../../utils'
 import { optionBaseSchema, blockBaseSchema } from '../../shared'
 import { InputBlockType } from '../constants'
@@ -14,16 +14,11 @@ export const numberInputOptionsSchema = optionBaseSchema
     })
   )
 
-export const numberInputSchema = blockBaseSchema
-  .merge(
-    z.object({
-      type: z.enum([InputBlockType.NUMBER]),
-      options: numberInputOptionsSchema.optional(),
-    })
-  )
-  .openapi({
-    title: 'Number',
-    ref: 'numberInput',
+export const numberInputSchema = blockBaseSchema.merge(
+  z.object({
+    type: z.enum([InputBlockType.NUMBER]),
+    options: numberInputOptionsSchema.optional(),
   })
+)
 
 export type NumberInputBlock = z.infer<typeof numberInputSchema>

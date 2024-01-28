@@ -7,7 +7,7 @@ export const subscribePreviewWebhook = publicProcedure
   .meta({
     openapi: {
       method: 'GET',
-      path: '/v1/whatsapp/preview/webhook',
+      path: '/whatsapp/preview/webhook',
       summary: 'Subscribe webhook',
       tags: ['WhatsApp'],
     },

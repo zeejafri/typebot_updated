@@ -61,7 +61,7 @@ export const ConfirmModal = ({
 
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
-              {t('cancel')}
+              Cancel
             </Button>
             <Button
               colorScheme={confirmButtonColor}

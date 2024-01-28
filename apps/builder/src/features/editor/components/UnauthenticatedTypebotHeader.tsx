@@ -62,7 +62,7 @@ export const GuestTypebotHeader = () => {
           variant={router.pathname.includes('/edit') ? 'outline' : 'ghost'}
           size="sm"
         >
-          {t('editor.header.flowButton.label')}
+          {t('editor.headers.flowButton.label')}
         </Button>
         <Button
           as={Link}
@@ -71,7 +71,7 @@ export const GuestTypebotHeader = () => {
           variant={router.pathname.endsWith('theme') ? 'outline' : 'ghost'}
           size="sm"
         >
-          {t('editor.header.themeButton.label')}
+          {t('editor.headers.themeButton.label')}
         </Button>
         <Button
           as={Link}
@@ -80,7 +80,7 @@ export const GuestTypebotHeader = () => {
           variant={router.pathname.endsWith('settings') ? 'outline' : 'ghost'}
           size="sm"
         >
-          {t('editor.header.settingsButton.label')}
+          {t('editor.headers.settingsButton.label')}
         </Button>
       </HStack>
       <HStack

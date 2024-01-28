@@ -1,4 +1,4 @@
-import { z } from '../../../../zod'
+import { z } from 'zod'
 import { pixelEventTypes } from './constants'
 import { blockBaseSchema } from '../../shared'
 import { IntegrationBlockType } from '../constants'
@@ -19,9 +19,7 @@ const basePixelOptionSchema = z.object({
 
 const initialPixelOptionSchema = basePixelOptionSchema.merge(
   z.object({
-    eventType: z.undefined().openapi({
-      type: 'string',
-    }),
+    eventType: z.undefined(),
   })
 )
 

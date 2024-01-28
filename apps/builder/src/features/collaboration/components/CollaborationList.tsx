@@ -28,12 +28,9 @@ import { deleteInvitationQuery } from '../queries/deleteInvitationQuery'
 import { updateCollaboratorQuery } from '../queries/updateCollaboratorQuery'
 import { deleteCollaboratorQuery } from '../queries/deleteCollaboratorQuery'
 import { sendInvitationQuery } from '../queries/sendInvitationQuery'
-import { useTranslate } from '@tolgee/react'
-import { ReadableCollaborationType } from './ReadableCollaborationType'
 
 export const CollaborationList = () => {
   const { currentRole, workspace } = useWorkspace()
-  const { t } = useTranslate()
   const { typebot } = useTypebot()
   const [invitationType, setInvitationType] = useState<CollaborationType>(
     CollaborationType.READ
@@ -53,7 +50,7 @@ export const CollaborationList = () => {
     typebotId: typebot?.id,
     onError: (e) =>
       showToast({
-        title: t('share.button.popover.collaboratorsFetch.error.label'),
+        title: "Couldn't fetch collaborators",
         description: e.message,
       }),
   })
@@ -65,7 +62,7 @@ export const CollaborationList = () => {
     typebotId: typebot?.id,
     onError: (e) =>
       showToast({
-        title: t('share.button.popover.invitationsFetch.error.label'),
+        title: "Couldn't fetch invitations",
         description: e.message,
       }),
   })
@@ -135,10 +132,7 @@ export const CollaborationList = () => {
     mutateCollaborators({ collaborators: collaborators ?? [] })
     if (error)
       return showToast({ title: error.name, description: error.message })
-    showToast({
-      status: 'success',
-      title: t('share.button.popover.invitationSent.successToast.label'),
-    })
+    showToast({ status: 'success', title: 'Invitation sent! 📧' })
     setInvitationEmail('')
   }
 
@@ -147,7 +141,7 @@ export const CollaborationList = () => {
       <HStack as="form" onSubmit={handleInvitationSubmit} px="4" pb="2">
         <Input
           size="sm"
-          placeholder={t('share.button.popover.inviteInput.placeholder')}
+          placeholder="colleague@company.com"
           name="inviteEmail"
           value={invitationEmail}
           onChange={(e) => setInvitationEmail(e.target.value)}
@@ -169,7 +163,7 @@ export const CollaborationList = () => {
           type="submit"
           isDisabled={!hasFullAccess}
         >
-          {t('share.button.popover.inviteButton.label')}
+          Invite
         </Button>
       </HStack>
       {workspace && (
@@ -181,7 +175,9 @@ export const CollaborationList = () => {
             </Text>
           </HStack>
           <Tag flexShrink={0}>
-            <ReadableCollaborationType type={CollaborationType.FULL_ACCESS} />
+            {convertCollaborationTypeEnumToReadable(
+              CollaborationType.FULL_ACCESS
+            )}
           </Tag>
         </Flex>
       )}
@@ -230,25 +226,40 @@ const CollaborationTypeMenuButton = ({
 }: {
   type: CollaborationType
   onChange: (type: CollaborationType) => void
-}) => (
-  <Menu placement="bottom-end">
-    <MenuButton
-      flexShrink={0}
-      size="sm"
-      as={Button}
-      rightIcon={<ChevronLeftIcon transform={'rotate(-90deg)'} />}
-    >
-      <ReadableCollaborationType type={type} />
-    </MenuButton>
-    <MenuList minW={0}>
-      <Stack maxH={'35vh'} overflowY="auto" spacing="0">
-        <MenuItem onClick={() => onChange(CollaborationType.READ)}>
-          <ReadableCollaborationType type={CollaborationType.READ} />
-        </MenuItem>
-        <MenuItem onClick={() => onChange(CollaborationType.WRITE)}>
-          <ReadableCollaborationType type={CollaborationType.WRITE} />
-        </MenuItem>
-      </Stack>
-    </MenuList>
-  </Menu>
-)
+}) => {
+  return (
+    <Menu placement="bottom-end">
+      <MenuButton
+        flexShrink={0}
+        size="sm"
+        as={Button}
+        rightIcon={<ChevronLeftIcon transform={'rotate(-90deg)'} />}
+      >
+        {convertCollaborationTypeEnumToReadable(type)}
+      </MenuButton>
+      <MenuList minW={0}>
+        <Stack maxH={'35vh'} overflowY="scroll" spacing="0">
+          <MenuItem onClick={() => onChange(CollaborationType.READ)}>
+            {convertCollaborationTypeEnumToReadable(CollaborationType.READ)}
+          </MenuItem>
+          <MenuItem onClick={() => onChange(CollaborationType.WRITE)}>
+            {convertCollaborationTypeEnumToReadable(CollaborationType.WRITE)}
+          </MenuItem>
+        </Stack>
+      </MenuList>
+    </Menu>
+  )
+}
+
+export const convertCollaborationTypeEnumToReadable = (
+  type: CollaborationType
+) => {
+  switch (type) {
+    case CollaborationType.READ:
+      return 'Can view'
+    case CollaborationType.WRITE:
+      return 'Can edit'
+    case CollaborationType.FULL_ACCESS:
+      return 'Full access'
+  }
+}

@@ -17,7 +17,6 @@ export const executeGoogleAnalyticsBlock = (
     outgoingEdgeId: block.outgoingEdgeId,
     clientSideActions: [
       {
-        type: 'googleAnalytics',
         googleAnalytics,
       },
     ],
