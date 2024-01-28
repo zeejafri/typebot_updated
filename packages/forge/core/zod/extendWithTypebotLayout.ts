@@ -8,8 +8,7 @@ export interface ZodLayoutMetadata<
 > {
   accordion?: string
   label?: string
-  inputType?: 'variableDropdown' | 'textarea' | 'password' | 'code'
-  lang?: 'javascript' | 'html' | 'css' | 'json'
+  input?: 'variableDropdown' | 'textarea' | 'password'
   defaultValue?: T extends ZodDate ? string : TInferred
   placeholder?: string
   helperText?: string
@@ -19,6 +18,7 @@ export interface ZodLayoutMetadata<
   fetcher?: T extends OptionableZodType<ZodString> ? string : never
   itemLabel?: T extends OptionableZodType<ZodArray<any>> ? string : never
   isOrdered?: T extends OptionableZodType<ZodArray<any>> ? boolean : never
+  isHidden?: boolean
   moreInfoTooltip?: string
 }
 

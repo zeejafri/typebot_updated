@@ -11,6 +11,7 @@ import {
   googleSheetsCredentialsSchema,
   stripeCredentialsSchema,
   zemanticAiCredentialsSchema,
+  googleCalendarCredentialsSchema,
 } from '@typebot.io/schemas'
 import { isDefined } from '@typebot.io/lib/utils'
 import { isWriteWorkspaceForbidden } from '@/features/workspace/helpers/isWriteWorkspaceForbidden'
@@ -42,6 +43,7 @@ export const createCredentials = authenticatedProcedure
           openAICredentialsSchema.pick(inputShape),
           whatsAppCredentialsSchema.pick(inputShape),
           zemanticAiCredentialsSchema.pick(inputShape),
+          googleCalendarCredentialsSchema.pick(inputShape),
         ])
         .and(z.object({ id: z.string().cuid2().optional() })),
     })

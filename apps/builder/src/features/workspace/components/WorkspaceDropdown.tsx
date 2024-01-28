@@ -17,10 +17,10 @@ import {
   MenuItem,
   Text,
 } from '@chakra-ui/react'
-import { WorkspaceInApp } from '../WorkspaceProvider'
+import { Workspace } from '@typebot.io/schemas'
 
 type Props = {
-  currentWorkspace?: WorkspaceInApp
+  currentWorkspace?: Workspace
   onWorkspaceSelected: (workspaceId: string) => void
   onCreateNewWorkspaceClick: () => void
   onLogoutClick: () => void

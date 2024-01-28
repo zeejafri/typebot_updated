@@ -2,6 +2,7 @@ import { CodeEditor } from '@/components/inputs/CodeEditor'
 import { useTypebot } from '@/features/editor/providers/TypebotProvider'
 import { Stack, Text } from '@chakra-ui/react'
 import { BubbleProps } from '@typebot.io/nextjs'
+import { Typebot } from '@typebot.io/schemas'
 import { useState } from 'react'
 import { BubbleSettings } from '../../../settings/BubbleSettings/BubbleSettings'
 import {
@@ -10,7 +11,16 @@ import {
   typebotImportCode,
   parseApiHostValue,
 } from '../../../snippetParsers'
-import { parseDefaultBubbleTheme } from '../../Javascript/instructions/JavascriptBubbleInstructions'
+
+export const parseDefaultBubbleTheme = (typebot?: Typebot) => ({
+  button: {
+    backgroundColor: typebot?.theme.chat?.buttons?.backgroundColor,
+    iconColor: typebot?.theme.chat?.buttons?.color,
+  },
+  previewMessage: {
+    backgroundColor: typebot?.theme.general?.background?.content,
+  },
+})
 
 export const ScriptBubbleInstructions = () => {
   const { typebot } = useTypebot()

@@ -3,6 +3,7 @@ import { Plan } from '@typebot.io/prisma'
 import { TextLink } from '@/components/TextLink'
 import { useToast } from '@/hooks/useToast'
 import { trpc } from '@/lib/trpc'
+import { Workspace } from '@typebot.io/schemas'
 import { PreCheckoutModal, PreCheckoutModalProps } from './PreCheckoutModal'
 import { useState } from 'react'
 import { ParentModalProvider } from '@/features/graph/providers/ParentModalProvider'
@@ -12,10 +13,9 @@ import { ProPlanPricingCard } from './ProPlanPricingCard'
 import { useTranslate } from '@tolgee/react'
 import { StripeClimateLogo } from './StripeClimateLogo'
 import { guessIfUserIsEuropean } from '@typebot.io/lib/billing/guessIfUserIsEuropean'
-import { WorkspaceInApp } from '@/features/workspace/WorkspaceProvider'
 
 type Props = {
-  workspace: WorkspaceInApp
+  workspace: Workspace
   excludedPlans?: ('STARTER' | 'PRO')[]
 }
 

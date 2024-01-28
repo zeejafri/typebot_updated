@@ -16,7 +16,6 @@ import { InputBlock } from '@typebot.io/schemas'
 import { StartFrom } from '@typebot.io/schemas'
 import { defaultTheme } from '@typebot.io/schemas/features/typebot/theme/constants'
 import { clsx } from 'clsx'
-import { HTTPError } from 'ky'
 
 export type BotProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,7 +52,7 @@ export const Bot = (props: BotProps & { class?: string }) => {
       typeof props.typebot === 'string' ? props.typebot : undefined
     const isPreview =
       typeof props.typebot !== 'string' || (props.isPreview ?? false)
-    const { data, error } = await startChatQuery({
+    const { data, error, response } = await startChatQuery({
       stripeRedirectStatus: urlParams.get('redirect_status') ?? undefined,
       typebot: props.typebot,
       apiHost: props.apiHost,
@@ -67,42 +66,24 @@ export const Bot = (props: BotProps & { class?: string }) => {
       },
       startFrom: props.startFrom,
     })
-    if (error instanceof HTTPError) {
+    if (error && 'code' in error && typeof error.code === 'string') {
       if (isPreview) {
         return setError(
-          new Error(`An error occurred while loading the bot.`, {
-            cause: {
-              status: error.response.status,
-              body: await error.response.json(),
-            },
+          new Error('An error occurred while loading the bot.', {
+            cause: error.message,
           })
         )
       }
-      if (error.response.status === 400 || error.response.status === 403)
+      if (['BAD_REQUEST', 'FORBIDDEN'].includes(error.code))
         return setError(new Error('This bot is now closed.'))
-      if (error.response.status === 404)
+      if (error.code === 'NOT_FOUND')
         return setError(new Error("The bot you're looking for doesn't exist."))
-      return setError(
-        new Error(
-          `Error! Couldn't initiate the chat. (${error.response.statusText})`
-        )
-      )
     }
 
     if (!data) {
-      if (error) {
-        console.error(error)
-        if (isPreview) {
-          return setError(
-            new Error(`Error! Could not reach server. Check your connection.`, {
-              cause: error,
-            })
-          )
-        }
-      }
-      return setError(
-        new Error('Error! Could not reach server. Check your connection.')
-      )
+      if (error) console.error(error)
+      console.error({ data, error, response })
+      return setError(new Error("Error! Couldn't initiate the chat."))
     }
 
     if (data.resultId && typebotIdFromProps)

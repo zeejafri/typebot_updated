@@ -25,7 +25,6 @@ type Props = {
   moreInfoTooltip?: string
   direction?: 'row' | 'column'
   isRequired?: boolean
-  width?: 'full'
   onChange: (value: string | undefined) => void
 }
 export const ForgeSelectInput = ({
@@ -39,7 +38,6 @@ export const ForgeSelectInput = ({
   moreInfoTooltip,
   isRequired,
   direction = 'column',
-  width,
   onChange,
 }: Props) => {
   const { workspace } = useWorkspace()
@@ -56,7 +54,7 @@ export const ForgeSelectInput = ({
     return fetchers.find((fetcher) => fetcher.id === fetcherId)
   }, [baseFetcher, blockDef.actions, fetcherId])
 
-  const { data } = trpc.forge.fetchSelectItems.useQuery(
+  const { data } = trpc.integrations.fetchSelectItems.useQuery(
     {
       integrationId: blockDef.id,
       options: pick(options, [
@@ -85,7 +83,7 @@ export const ForgeSelectInput = ({
       isRequired={isRequired}
       as={direction === 'column' ? Stack : HStack}
       justifyContent="space-between"
-      width={label || width === 'full' ? 'full' : 'auto'}
+      width={label ? 'full' : 'auto'}
       spacing={direction === 'column' ? 2 : 3}
     >
       {label && (

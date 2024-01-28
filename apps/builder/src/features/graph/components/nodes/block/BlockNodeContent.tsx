@@ -39,6 +39,7 @@ import { LogicBlockType } from '@typebot.io/schemas/features/blocks/logic/consta
 import { IntegrationBlockType } from '@typebot.io/schemas/features/blocks/integrations/constants'
 import { ForgedBlockNodeContent } from '@/features/forge/components/ForgedBlockNodeContent'
 import { OpenAINodeBody } from '@/features/blocks/integrations/openai/components/OpenAINodeBody'
+import {GoogleCalendarNodeContent} from '@/features/blocks/integrations/googleCalendar/components/googleNodeContent'
 
 type Props = {
   block: BlockV6
@@ -123,6 +124,9 @@ export const BlockNodeContent = ({
       return <ItemNodesList block={block} indices={indices} />
     case IntegrationBlockType.GOOGLE_SHEETS: {
       return <GoogleSheetsNodeContent options={block.options} />
+    }
+    case IntegrationBlockType.GOOGLE_CALENDAR: {
+      return <GoogleCalendarNodeContent options={block.options} />
     }
     case IntegrationBlockType.GOOGLE_ANALYTICS: {
       return <GoogleAnalyticsNodeBody action={block.options?.action} />

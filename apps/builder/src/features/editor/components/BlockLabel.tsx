@@ -74,9 +74,9 @@ export const BlockLabel = ({ type }: Props): JSX.Element => {
     case IntegrationBlockType.GOOGLE_SHEETS:
       return <Text fontSize="sm">{t('editor.sidebarBlock.sheets.label')}</Text>
     case IntegrationBlockType.GOOGLE_ANALYTICS:
-      return (
-        <Text fontSize="sm">{t('editor.sidebarBlock.analytics.label')}</Text>
-      )
+      return <Text fontSize="sm">{t('editor.sidebarBlock.analytics.label')}</Text>
+    case IntegrationBlockType.GOOGLE_CALENDAR:
+      return  <Text fontSize="sm">{t('Calendar')}</Text>
     case IntegrationBlockType.WEBHOOK:
       return <Text fontSize="sm">{t('editor.sidebarBlock.webhook.label')}</Text>
     case IntegrationBlockType.ZAPIER:

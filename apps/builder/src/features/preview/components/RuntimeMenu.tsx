@@ -28,8 +28,7 @@ export const RuntimeMenu = ({ selectedRuntime, onSelectRuntime }: Props) => {
       >
         <HStack justifyContent="space-between">
           <Text>{selectedRuntime.name}</Text>
-          {'status' in selectedRuntime &&
-          typeof selectedRuntime.status === 'string' ? (
+          {'status' in selectedRuntime ? (
             <Tag colorScheme="orange">{selectedRuntime.status}</Tag>
           ) : null}
         </HStack>
@@ -45,7 +44,7 @@ export const RuntimeMenu = ({ selectedRuntime, onSelectRuntime }: Props) => {
             >
               <HStack justifyContent="space-between">
                 <Text>{runtime.name}</Text>
-                {'status' in runtime && typeof runtime.status === 'string' ? (
+                {'status' in runtime ? (
                   <Tag colorScheme="orange">{runtime.status}</Tag>
                 ) : null}
               </HStack>

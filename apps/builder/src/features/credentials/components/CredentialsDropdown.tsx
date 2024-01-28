@@ -15,10 +15,9 @@ import { useToast } from '../../../hooks/useToast'
 import { Credentials } from '@typebot.io/schemas'
 import { trpc } from '@/lib/trpc'
 import { useWorkspace } from '@/features/workspace/WorkspaceProvider'
-import { useTranslate } from '@tolgee/react'
 
 type Props = Omit<ButtonProps, 'type'> & {
-  type: Credentials['type']
+  type: Credentials['type']  
   workspaceId: string
   currentCredentialsId?: string
   onCredentialsSelect: (credentialId?: string) => void
@@ -37,7 +36,6 @@ export const CredentialsDropdown = ({
   credentialsName,
   ...props
 }: Props) => {
-  const { t } = useTranslate()
   const { showToast } = useToast()
   const { currentRole } = useWorkspace()
   const { data, refetch } = trpc.credentials.listCredentials.useQuery({
@@ -64,7 +62,7 @@ export const CredentialsDropdown = ({
   })
 
   const defaultCredentialsLabel =
-    defaultCredentialLabel ?? `${t('select')} ${credentialsName}`
+    defaultCredentialLabel ?? `Select ${credentialsName}`
 
   const currentCredential = data?.credentials.find(
     (c) => c.id === currentCredentialsId
@@ -93,7 +91,7 @@ export const CredentialsDropdown = ({
         isDisabled={currentRole === 'GUEST'}
         {...props}
       >
-        {t('add')} {credentialsName}
+        Add {credentialsName}
       </Button>
     )
   }
@@ -116,7 +114,7 @@ export const CredentialsDropdown = ({
         </Text>
       </MenuButton>
       <MenuList>
-        <Stack maxH={'35vh'} overflowY="auto" spacing="0">
+        <Stack maxH={'35vh'} overflowY="scroll" spacing="0">
           {defaultCredentialLabel && (
             <MenuItem
               maxW="500px"
@@ -142,9 +140,7 @@ export const CredentialsDropdown = ({
               {credentials.name}
               <IconButton
                 icon={<TrashIcon />}
-                aria-label={t(
-                  'blocks.inputs.payment.settings.credentials.removeCredentials.label'
-                )}
+                aria-label="Remove credentials"
                 size="xs"
                 onClick={deleteCredentials(credentials.id)}
                 isLoading={isDeleting === credentials.id}
@@ -160,7 +156,7 @@ export const CredentialsDropdown = ({
               icon={<PlusIcon />}
               onClick={onCreateNewClick}
             >
-              {t('blocks.inputs.payment.settings.credentials.connectNew.label')}
+              Connect new
             </MenuItem>
           )}
         </Stack>

@@ -33,7 +33,6 @@ import { byId, isDefined, isNotDefined } from '@typebot.io/lib'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 import { useParentModal } from '@/features/graph/providers/ParentModalProvider'
 import { MoreInfoTooltip } from '../MoreInfoTooltip'
-import { useTranslate } from '@tolgee/react'
 
 type Props = {
   initialVariableId: string | undefined
@@ -46,7 +45,6 @@ type Props = {
   helperText?: ReactNode
   moreInfoTooltip?: string
   direction?: 'row' | 'column'
-  width?: 'full'
 } & Omit<InputProps, 'placeholder'>
 
 export const VariableSearchInput = ({
@@ -59,7 +57,6 @@ export const VariableSearchInput = ({
   moreInfoTooltip,
   direction = 'column',
   isRequired,
-  width,
   ...inputProps
 }: Props) => {
   const focusedItemBgColor = useColorModeValue('gray.200', 'gray.700')
@@ -81,7 +78,6 @@ export const VariableSearchInput = ({
   const createVariableItemRef = useRef<HTMLButtonElement | null>(null)
   const itemsRef = useRef<(HTMLButtonElement | null)[]>([])
   const { ref: parentModalRef } = useParentModal()
-  const { t } = useTranslate()
 
   useOutsideClick({
     ref: dropdownRef,
@@ -141,7 +137,7 @@ export const VariableSearchInput = ({
   const handleRenameVariableClick =
     (variable: Variable) => (e: React.MouseEvent) => {
       e.stopPropagation()
-      const name = prompt(t('variables.rename'), variable.name)
+      const name = prompt('Rename variable', variable.name)
       if (!name) return
       updateVariable(variable.id, { name })
       setFilteredItems(
@@ -198,7 +194,7 @@ export const VariableSearchInput = ({
       isRequired={isRequired}
       as={direction === 'column' ? Stack : HStack}
       justifyContent="space-between"
-      width={label || width === 'full' ? 'full' : 'auto'}
+      width={label ? 'full' : 'auto'}
       spacing={direction === 'column' ? 2 : 3}
     >
       {label && (
@@ -225,7 +221,7 @@ export const VariableSearchInput = ({
               onChange={onInputChange}
               onFocus={openDropdown}
               onKeyDown={handleKeyUp}
-              placeholder={placeholder ?? t('variables.select')}
+              placeholder={placeholder ?? 'Select a variable'}
               autoComplete="off"
               {...inputProps}
             />
@@ -233,7 +229,7 @@ export const VariableSearchInput = ({
           <Portal containerRef={parentModalRef}>
             <PopoverContent
               maxH="35vh"
-              overflowY="auto"
+              overflowY="scroll"
               role="menu"
               w="inherit"
               shadow="lg"
@@ -259,7 +255,7 @@ export const VariableSearchInput = ({
                       : 'transparent'
                   }
                 >
-                  {t('create')}
+                  Create
                   <Tag colorScheme="orange" ml="1">
                     <Text noOfLines={0} display="block">
                       {inputValue}
@@ -300,13 +296,13 @@ export const VariableSearchInput = ({
                         <HStack>
                           <IconButton
                             icon={<EditIcon />}
-                            aria-label={t('variables.rename')}
+                            aria-label="Rename variable"
                             size="xs"
                             onClick={handleRenameVariableClick(item)}
                           />
                           <IconButton
                             icon={<TrashIcon />}
-                            aria-label={t('variables.remove')}
+                            aria-label="Remove variable"
                             size="xs"
                             onClick={handleDeleteVariableClick(item)}
                           />

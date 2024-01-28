@@ -8,12 +8,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { AlignLeftTextIcon } from '@/components/icons'
-import {
-  CellValueType,
-  ResultHeaderCell,
-  ResultsTablePreferences,
-  TableData,
-} from '@typebot.io/schemas'
+import { ResultHeaderCell, ResultsTablePreferences } from '@typebot.io/schemas'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { LoadingRows } from './LoadingRows'
 import {
@@ -27,10 +22,11 @@ import { useTypebot } from '@/features/editor/providers/TypebotProvider'
 import { SelectionToolbar } from './SelectionToolbar'
 import { Row } from './Row'
 import { HeaderRow } from './HeaderRow'
+import { CellValueType, TableData } from '../../types'
 import { IndeterminateCheckbox } from './IndeterminateCheckbox'
 import { colors } from '@/lib/theme'
+import { parseColumnOrder } from '../../helpers/parseColumnsOrder'
 import { HeaderIcon } from '../HeaderIcon'
-import { parseColumnsOrder } from '@typebot.io/lib/results/parseColumnsOrder'
 
 type ResultsTableProps = {
   resultHeader: ResultHeaderCell[]
@@ -64,7 +60,7 @@ export const ResultsTable = ({
     columnsWidth = {},
   } = {
     ...preferences,
-    columnsOrder: parseColumnsOrder(preferences?.columnsOrder, resultHeader),
+    columnsOrder: parseColumnOrder(preferences?.columnsOrder, resultHeader),
   }
 
   const changeColumnOrder = (newColumnOrder: string[]) => {
@@ -232,7 +228,7 @@ export const ResultsTable = ({
       </HStack>
       <Box
         ref={tableWrapper}
-        overflow="auto"
+        overflow="scroll"
         rounded="md"
         data-testid="results-table"
         backgroundImage={`linear-gradient(to right, ${background}, ${background}), linear-gradient(to right, ${background}, ${background}),linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0)),linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0));`}

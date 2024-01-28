@@ -96,7 +96,6 @@ export const createChatCompletionOpenAI = async (
     return {
       clientSideActions: [
         {
-          type: 'streamOpenAiChatCompletion',
           streamOpenAiChatCompletion: {
             messages: messages as {
               content?: string

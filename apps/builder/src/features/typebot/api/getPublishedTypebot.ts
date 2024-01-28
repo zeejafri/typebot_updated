@@ -23,15 +23,10 @@ export const getPublishedTypebot = authenticatedProcedure
   })
   .input(
     z.object({
-      typebotId: z
-        .string()
-        .describe(
-          "[Where to find my bot's ID?](../how-to#how-to-find-my-typebotid)"
-        ),
+      typebotId: z.string(),
       migrateToLatestVersion: z
         .boolean()
         .optional()
-        .default(false)
         .describe(
           'If enabled, the typebot will be converted to the latest schema version'
         ),
@@ -41,14 +36,11 @@ export const getPublishedTypebot = authenticatedProcedure
     z.object({
       publishedTypebot: publicTypebotSchema.nullable(),
       version: z
-        .enum([
-          ...publicTypebotSchemaV5._def.schema.shape.version._def.values,
-          publicTypebotSchemaV6.shape.version._def.value,
+        .union([
+          publicTypebotSchemaV5._def.schema.shape.version,
+          publicTypebotSchemaV6.shape.version,
         ])
-        .optional()
-        .describe(
-          'Provides the version the published bot was migrated from if `migrateToLatestVersion` is set to `true`.'
-        ),
+        .optional(),
     })
   )
   .query(

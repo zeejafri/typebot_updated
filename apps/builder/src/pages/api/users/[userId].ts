@@ -2,7 +2,7 @@ import prisma from '@typebot.io/lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getAuthenticatedUser } from '@/features/auth/helpers/getAuthenticatedUser'
 import { methodNotAllowed, notAuthenticated } from '@typebot.io/lib/api'
-import { Prisma, User } from '@typebot.io/prisma'
+import { User } from '@typebot.io/prisma'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const user = await getAuthenticatedUser(req, res)
@@ -18,8 +18,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       data: {
         ...data,
         onboardingCategories: data.onboardingCategories ?? [],
-        displayedInAppNotifications:
-          data.displayedInAppNotifications ?? Prisma.DbNull,
       },
     })
     return res.send({ typebots })

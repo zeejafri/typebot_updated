@@ -32,7 +32,6 @@ export const executeSetVariable = (
       outgoingEdgeId: block.outgoingEdgeId,
       clientSideActions: [
         {
-          type: 'setVariable',
           setVariable: {
             scriptToExecute,
           },
@@ -63,8 +62,6 @@ const evaluateSetVariableExpression =
     const isSingleVariable =
       str.startsWith('{{') && str.endsWith('}}') && str.split('{{').length === 2
     if (isSingleVariable) return parseVariables(variables)(str)
-    // To avoid octal number evaluation
-    if (!isNaN(str as unknown as number) && /0[^.].+/.test(str)) return str
     const evaluating = parseVariables(variables, { fieldToParse: 'id' })(
       str.includes('return ') ? str : `return ${str}`
     )

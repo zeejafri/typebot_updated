@@ -24,7 +24,7 @@ export const getSubscription = authenticatedProcedure
   )
   .output(
     z.object({
-      subscription: subscriptionSchema.or(z.null().openapi({ type: 'string' })),
+      subscription: subscriptionSchema.or(z.null()),
     })
   )
   .query(async ({ input: { workspaceId }, ctx: { user } }) => {

@@ -3,7 +3,6 @@ import {
   WhatsAppCredentials,
   WhatsAppSendingMessage,
 } from '@typebot.io/schemas/features/whatsapp'
-import { env } from '@typebot.io/env'
 
 type Props = {
   to: string
@@ -17,7 +16,7 @@ export const sendWhatsAppMessage = async ({
   credentials,
 }: Props) =>
   got.post({
-    url: `${env.WHATSAPP_CLOUD_API_URL}/v17.0/${credentials.phoneNumberId}/messages`,
+    url: `https://graph.facebook.com/v17.0/${credentials.phoneNumberId}/messages`,
     headers: {
       Authorization: `Bearer ${credentials.systemUserAccessToken}`,
     },

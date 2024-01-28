@@ -5,7 +5,6 @@ import prisma from '@typebot.io/lib/prisma'
 import { decrypt } from '@typebot.io/lib/api/encryption/decrypt'
 import { TRPCError } from '@trpc/server'
 import { WhatsAppCredentials } from '@typebot.io/schemas/features/whatsapp'
-import { env } from '@typebot.io/env'
 
 const inputSchema = z.object({
   credentialsId: z.string().optional(),
@@ -14,7 +13,20 @@ const inputSchema = z.object({
 })
 
 export const getPhoneNumber = authenticatedProcedure
+  .meta({
+    openapi: {
+      method: 'GET',
+      path: '/whatsapp/phoneNumber',
+      protect: true,
+    },
+  })
   .input(inputSchema)
+  .output(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+    })
+  )
   .query(async ({ input, ctx: { user } }) => {
     const credentials = await getCredentials(user.id, input)
     if (!credentials)
@@ -23,7 +35,7 @@ export const getPhoneNumber = authenticatedProcedure
         message: 'Credentials not found',
       })
     const { display_phone_number } = (await got(
-      `${env.WHATSAPP_CLOUD_API_URL}/v17.0/${credentials.phoneNumberId}`,
+      `https://graph.facebook.com/v17.0/${credentials.phoneNumberId}`,
       {
         headers: {
           Authorization: `Bearer ${credentials.systemUserAccessToken}`,

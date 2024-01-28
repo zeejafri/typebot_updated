@@ -1,4 +1,4 @@
-import { z } from '../../../zod'
+import { z } from 'zod'
 import { chatwootBlockSchema } from './chatwoot'
 import { googleAnalyticsBlockSchema } from './googleAnalytics'
 import { googleSheetsBlockSchemas } from './googleSheets'
@@ -10,11 +10,13 @@ import { zapierBlockSchemas } from './zapier'
 import { webhookBlockSchemas } from './webhook'
 import { makeComBlockSchemas } from './makeCom'
 import { pabblyConnectBlockSchemas } from './pabblyConnect'
+import { googleCalendarBlockSchemas } from './googleCalendar'
 
 export const integrationBlockSchemas = {
   v5: [
     chatwootBlockSchema,
     googleAnalyticsBlockSchema,
+    googleCalendarBlockSchemas.v5,
     googleSheetsBlockSchemas.v5,
     makeComBlockSchemas.v5,
     openAIBlockSchema,
@@ -28,6 +30,7 @@ export const integrationBlockSchemas = {
   v6: [
     chatwootBlockSchema,
     googleAnalyticsBlockSchema,
+    googleCalendarBlockSchemas.v6,
     googleSheetsBlockSchemas.v6,
     makeComBlockSchemas.v6,
     openAIBlockSchema,

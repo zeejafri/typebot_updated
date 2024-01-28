@@ -10,6 +10,15 @@ import { OpenAI, ClientOptions } from 'openai'
 import { defaultOpenAIOptions } from '@typebot.io/schemas/features/blocks/integrations/openai/constants'
 
 export const listModels = authenticatedProcedure
+  .meta({
+    openapi: {
+      method: 'GET',
+      path: '/openai/models',
+      protect: true,
+      summary: 'List OpenAI models',
+      tags: ['OpenAI'],
+    },
+  })
   .input(
     z.object({
       credentialsId: z.string(),
@@ -17,6 +26,11 @@ export const listModels = authenticatedProcedure
       baseUrl: z.string(),
       apiVersion: z.string().optional(),
       type: z.enum(['gpt', 'tts']),
+    })
+  )
+  .output(
+    z.object({
+      models: z.array(z.string()),
     })
   )
   .query(

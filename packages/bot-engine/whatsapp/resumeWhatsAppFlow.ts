@@ -93,12 +93,10 @@ export const resumeWhatsAppFlow = async ({
     visitedEdges,
   } = resumeResponse
 
-  const isFirstChatChunk = (!session || isSessionExpired) ?? false
   await sendChatReplyToWhatsApp({
     to: receivedMessage.from,
     messages,
     input,
-    isFirstChatChunk,
     typingEmulation: newSessionState.typingEmulation,
     clientSideActions,
     credentials,
@@ -142,21 +140,15 @@ const getIncomingMessageContent = async ({
     }
     case 'document':
     case 'audio':
+      return
     case 'video':
     case 'image':
       if (!typebotId) return
-      let mediaId: string | undefined
-      if (message.type === 'video') mediaId = message.video.id
-      if (message.type === 'image') mediaId = message.image.id
-      if (message.type === 'audio') mediaId = message.audio.id
-      if (message.type === 'document') mediaId = message.document.id
-      if (!mediaId) return
+      const mediaId = 'video' in message ? message.video.id : message.image.id
       return (
         env.NEXTAUTH_URL +
         `/api/typebots/${typebotId}/whatsapp/media/${mediaId}`
       )
-    case 'location':
-      return `${message.location.latitude}, ${message.location.longitude}`
   }
 }
 

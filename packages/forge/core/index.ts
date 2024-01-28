@@ -1,4 +1,3 @@
-import { ZodRawShape } from 'zod'
 import { AuthDefinition, BlockDefinition, ActionDefinition } from './types'
 import { z } from './zod'
 
@@ -19,8 +18,8 @@ export const createBlock = <
 
 export const createAction = <
   A extends AuthDefinition,
-  BaseOptions extends z.ZodObject<ZodRawShape> = z.ZodObject<{}>,
-  O extends z.ZodObject<ZodRawShape> = z.ZodObject<{}>
+  BaseOptions extends z.ZodObject<any>,
+  O extends z.ZodObject<any>
 >(
   actionDefinition: {
     auth?: A
@@ -96,7 +95,6 @@ export const option = {
   object: <T extends z.ZodRawShape>(schema: T) => z.object(schema),
   literal: <T extends string>(value: T) => z.literal(value),
   string: z.string().optional(),
-  boolean: z.boolean().optional(),
   enum: <T extends string>(values: readonly [T, ...T[]]) =>
     z.enum(values).optional(),
   number: z.number().or(variableStringSchema).optional(),
@@ -125,7 +123,7 @@ export const option = {
             defaultValue: items[0],
           }),
           variableId: z.string().optional().layout({
-            inputType: 'variableDropdown',
+            input: 'variableDropdown',
           }),
         })
       )

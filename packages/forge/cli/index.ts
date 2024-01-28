@@ -275,7 +275,7 @@ const createAuthFile = async (
                     apiKey: option.string.layout({
                       label: 'API key',
                       isRequired: true,
-                      inputType: 'password',
+                      input: 'password',
                       helperText:
                         'You can generate an API key [here](<INSERT_URL>).',
                     }),

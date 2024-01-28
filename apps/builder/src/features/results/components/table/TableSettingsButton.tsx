@@ -68,7 +68,13 @@ const TableSettingsMenu = ({
   switch (selectedMenu) {
     case 'columnSettings':
       return (
-        <PopoverBody as={Stack} spacing="4" p="4" maxH="450px" overflowY="auto">
+        <PopoverBody
+          as={Stack}
+          spacing="4"
+          p="4"
+          maxH="450px"
+          overflowY="scroll"
+        >
           <ColumnSettings
             resultHeader={resultHeader}
             columnVisibility={columnVisibility}

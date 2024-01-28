@@ -2,19 +2,23 @@ import { getAppVersionProcedure } from '@/features/dashboard/api/getAppVersionPr
 import { router } from '../trpc'
 import { generateUploadUrl } from '@/features/upload/api/generateUploadUrl'
 import { openAIRouter } from '@/features/blocks/integrations/openai/api/router'
-import { internalWhatsAppRouter } from '@/features/whatsapp/router'
+import { whatsAppRouter } from '@/features/whatsapp/router'
 import { zemanticAiRouter } from '@/features/blocks/integrations/zemanticAi/api/router'
-import { forgeRouter } from '@/features/forge/api/router'
+import { forgedCredentialsRouter } from '@/features/forge/api/credentials/router'
+import { integrationsRouter } from '@/features/forge/api/router'
 import { googleSheetsRouter } from '@/features/blocks/integrations/googleSheets/api/router'
+import { googleCalendarRouter } from '@/features/blocks/integrations/googleCalendar/api/router'
 
 export const internalRouter = router({
   getAppVersionProcedure,
   generateUploadUrl,
-  whatsAppInternal: internalWhatsAppRouter,
+  whatsApp: whatsAppRouter,
   openAI: openAIRouter,
   zemanticAI: zemanticAiRouter,
-  forge: forgeRouter,
+  integrationCredentials: forgedCredentialsRouter,
+  integrations: integrationsRouter,
   sheets: googleSheetsRouter,
+  calendar: googleCalendarRouter,
 })
 
 export type InternalRouter = typeof internalRouter

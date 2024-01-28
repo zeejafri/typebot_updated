@@ -3,7 +3,6 @@ import { ThemeTemplate } from '@typebot.io/schemas'
 import { useState } from 'react'
 import { MyTemplates } from './MyTemplates'
 import { TemplatesGallery } from './TemplatesGallery'
-import { useTranslate } from '@tolgee/react'
 
 type Tab = 'my-templates' | 'gallery'
 
@@ -22,8 +21,6 @@ export const ThemeTemplates = ({
   currentTheme,
   onTemplateSelect,
 }: Props) => {
-  const { t } = useTranslate()
-
   const [selectedTab, setSelectedTab] = useState<Tab>('my-templates')
 
   return (
@@ -35,7 +32,7 @@ export const ThemeTemplates = ({
           colorScheme={selectedTab === 'my-templates' ? 'blue' : 'gray'}
           onClick={() => setSelectedTab('my-templates')}
         >
-          {t('theme.sideMenu.template.myTemplates')}
+          My templates
         </Button>
         <Button
           flex="1"
@@ -43,7 +40,7 @@ export const ThemeTemplates = ({
           colorScheme={selectedTab === 'gallery' ? 'blue' : 'gray'}
           onClick={() => setSelectedTab('gallery')}
         >
-          {t('theme.sideMenu.template.gallery')}
+          Gallery
         </Button>
       </HStack>
       <ThemeTemplatesBody

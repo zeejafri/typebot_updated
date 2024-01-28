@@ -10,13 +10,7 @@ export const defaultSettings = {
     isBrandingEnabled: false,
     isTypingEmulationEnabled: true,
   },
-  typingEmulation: {
-    enabled: true,
-    speed: 400,
-    maxDelay: 3,
-    delayBetweenBubbles: 0,
-    isDisabledOnFirstMessage: true,
-  },
+  typingEmulation: { enabled: true, speed: 300, maxDelay: 1.5 },
   metadata: {
     description:
       'Build beautiful conversational forms and embed them directly in your applications without a line of code. Triple your response rate and collect answers that has more value compared to a traditional form.',

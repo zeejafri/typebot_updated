@@ -15,14 +15,12 @@ import React, { useRef } from 'react'
 import { VariableSearchInput } from '@/components/inputs/VariableSearchInput'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 import { useParentModal } from '@/features/graph/providers/ParentModalProvider'
-import { useTranslate } from '@tolgee/react'
 
 type Props = {
   onSelectVariable: (variable: Pick<Variable, 'name' | 'id'>) => void
 } & Omit<IconButtonProps, 'aria-label'>
 
 export const VariablesButton = ({ onSelectVariable, ...props }: Props) => {
-  const { t } = useTranslate()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const popoverRef = useRef<HTMLDivElement>(null)
   const { ref: parentModalRef } = useParentModal()
@@ -37,9 +35,9 @@ export const VariablesButton = ({ onSelectVariable, ...props }: Props) => {
     <Popover isLazy isOpen={isOpen}>
       <PopoverAnchor>
         <Flex>
-          <Tooltip label={t('variables.button.tooltip')}>
+          <Tooltip label="Insert a variable">
             <IconButton
-              aria-label={t('variables.button.tooltip')}
+              aria-label={'Insert a variable'}
               icon={<UserIcon />}
               pos="relative"
               onClick={onOpen}
@@ -56,7 +54,7 @@ export const VariablesButton = ({ onSelectVariable, ...props }: Props) => {
               onClose()
               if (variable) onSelectVariable(variable)
             }}
-            placeholder={t('variables.button.searchInput.placeholder')}
+            placeholder="Search for a variable"
             shadow="lg"
             autoFocus
           />

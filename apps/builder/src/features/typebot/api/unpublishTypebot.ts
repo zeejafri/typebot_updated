@@ -16,11 +16,7 @@ export const unpublishTypebot = authenticatedProcedure
   })
   .input(
     z.object({
-      typebotId: z
-        .string()
-        .describe(
-          "[Where to find my bot's ID?](../how-to#how-to-find-my-typebotid)"
-        ),
+      typebotId: z.string(),
     })
   )
   .output(

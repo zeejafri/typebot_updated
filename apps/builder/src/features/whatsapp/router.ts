@@ -7,14 +7,11 @@ import { startWhatsAppPreview } from './startWhatsAppPreview'
 import { subscribePreviewWebhook } from './subscribePreviewWebhook'
 import { receiveMessagePreview } from './receiveMessagePreview'
 
-export const internalWhatsAppRouter = router({
+export const whatsAppRouter = router({
   getPhoneNumber,
   getSystemTokenInfo,
   verifyIfPhoneNumberAvailable,
   generateVerificationToken,
-})
-
-export const publicWhatsAppRouter = router({
   startWhatsAppPreview,
   subscribePreviewWebhook,
   receiveMessagePreview,

@@ -217,7 +217,7 @@ export const Select = <T extends Item>({
         <Portal containerRef={parentModalRef}>
           <PopoverContent
             maxH="35vh"
-            overflowY="auto"
+            overflowY="scroll"
             role="menu"
             w="inherit"
             shadow="lg"

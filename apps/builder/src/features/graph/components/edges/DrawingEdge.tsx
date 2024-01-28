@@ -8,26 +8,18 @@ import { Coordinates } from '@dnd-kit/utilities'
 import { computeConnectingEdgePath } from '../../helpers/computeConnectingEdgePath'
 import { computeEdgePathToMouse } from '../../helpers/computeEdgePathToMouth'
 import { useGraph } from '../../providers/GraphProvider'
+import { useGroupsCoordinates } from '../../providers/GroupsCoordinateProvider'
 import { ConnectingIds } from '../../types'
 import { useEventsCoordinates } from '../../providers/EventsCoordinateProvider'
 import { eventWidth, groupWidth } from '../../constants'
-import { useGroupsStore } from '../../hooks/useGroupsStore'
 
-type Props = {
-  connectingIds: ConnectingIds
-}
-
-export const DrawingEdge = ({ connectingIds }: Props) => {
-  const { graphPosition, setConnectingIds } = useGraph()
+export const DrawingEdge = () => {
+  const { graphPosition, setConnectingIds, connectingIds } = useGraph()
   const {
     sourceEndpointYOffsets: sourceEndpoints,
     targetEndpointYOffsets: targetEndpoints,
   } = useEndpoints()
-  const groupsCoordinates = useGroupsStore(
-    (state) => state.groupsCoordinates,
-    // Keep in cache because groups are not changing while drawing an edge
-    () => true
-  )
+  const { groupsCoordinates } = useGroupsCoordinates()
   const { eventsCoordinates } = useEventsCoordinates()
   const { createEdge } = useTypebot()
   const [mousePosition, setMousePosition] = useState<Coordinates | null>(null)
@@ -35,9 +27,7 @@ export const DrawingEdge = ({ connectingIds }: Props) => {
   const sourceElementCoordinates = connectingIds
     ? 'eventId' in connectingIds.source
       ? eventsCoordinates[connectingIds?.source.eventId]
-      : groupsCoordinates
-      ? groupsCoordinates[connectingIds?.source.groupId ?? '']
-      : undefined
+      : groupsCoordinates[connectingIds?.source.groupId ?? '']
     : undefined
 
   const targetGroupCoordinates =
@@ -116,7 +106,10 @@ export const DrawingEdge = ({ connectingIds }: Props) => {
     createEdge({ from: connectingIds.source, to: connectingIds.target })
   }
 
-  if (mousePosition && mousePosition.x === 0 && mousePosition.y === 0)
+  if (
+    (mousePosition && mousePosition.x === 0 && mousePosition.y === 0) ||
+    !connectingIds
+  )
     return <></>
   return (
     <path

@@ -6,7 +6,6 @@ import React from 'react'
 import { PictureChoiceBlock } from '@typebot.io/schemas/features/blocks/inputs/pictureChoice'
 import { SwitchWithRelatedSettings } from '@/components/SwitchWithRelatedSettings'
 import { defaultPictureChoiceOptions } from '@typebot.io/schemas/features/blocks/inputs/pictureChoice/constants'
-import { useTranslate } from '@tolgee/react'
 
 type Props = {
   options?: PictureChoiceBlock['options']
@@ -14,8 +13,6 @@ type Props = {
 }
 
 export const PictureChoiceSettings = ({ options, onOptionsChange }: Props) => {
-  const { t } = useTranslate()
-
   const updateIsMultiple = (isMultipleChoice: boolean) =>
     onOptionsChange({ ...options, isMultipleChoice })
   const updateButtonLabel = (buttonLabel: string) =>
@@ -66,14 +63,14 @@ export const PictureChoiceSettings = ({ options, onOptionsChange }: Props) => {
   return (
     <Stack spacing={4}>
       <SwitchWithRelatedSettings
-        label={t('blocks.inputs.settings.isSearchable.label')}
+        label="Is searchable?"
         initialValue={
           options?.isSearchable ?? defaultPictureChoiceOptions.isSearchable
         }
         onCheckChange={updateIsSearchable}
       >
         <TextInput
-          label={t('blocks.inputs.settings.input.placeholder.label')}
+          label="Input placeholder:"
           defaultValue={
             options?.searchInputPlaceholder ??
             defaultPictureChoiceOptions.searchInputPlaceholder
@@ -82,7 +79,7 @@ export const PictureChoiceSettings = ({ options, onOptionsChange }: Props) => {
         />
       </SwitchWithRelatedSettings>
       <SwitchWithRelatedSettings
-        label={t('blocks.inputs.settings.multipleChoice.label')}
+        label="Multiple choice?"
         initialValue={
           options?.isMultipleChoice ??
           defaultPictureChoiceOptions.isMultipleChoice
@@ -90,7 +87,7 @@ export const PictureChoiceSettings = ({ options, onOptionsChange }: Props) => {
         onCheckChange={updateIsMultiple}
       >
         <TextInput
-          label={t('blocks.inputs.settings.submitButton.label')}
+          label="Submit button label:"
           defaultValue={
             options?.buttonLabel ?? defaultPictureChoiceOptions.buttonLabel
           }
@@ -99,7 +96,7 @@ export const PictureChoiceSettings = ({ options, onOptionsChange }: Props) => {
       </SwitchWithRelatedSettings>
 
       <SwitchWithRelatedSettings
-        label={t('blocks.inputs.picture.settings.dynamicItems.label')}
+        label="Dynamic items?"
         initialValue={
           options?.dynamicItems?.isEnabled ??
           defaultPictureChoiceOptions.dynamicItems.isEnabled
@@ -108,7 +105,7 @@ export const PictureChoiceSettings = ({ options, onOptionsChange }: Props) => {
       >
         <Stack>
           <FormLabel mb="0" htmlFor="variable">
-            {t('blocks.inputs.picture.settings.dynamicItems.images.label')}
+            Images:
           </FormLabel>
           <VariableSearchInput
             initialVariableId={options?.dynamicItems?.pictureSrcsVariableId}
@@ -117,7 +114,7 @@ export const PictureChoiceSettings = ({ options, onOptionsChange }: Props) => {
         </Stack>
         <Stack>
           <FormLabel mb="0" htmlFor="variable">
-            {t('blocks.inputs.picture.settings.dynamicItems.titles.label')}
+            Titles:
           </FormLabel>
           <VariableSearchInput
             initialVariableId={options?.dynamicItems?.titlesVariableId}
@@ -126,9 +123,7 @@ export const PictureChoiceSettings = ({ options, onOptionsChange }: Props) => {
         </Stack>
         <Stack>
           <FormLabel mb="0" htmlFor="variable">
-            {t(
-              'blocks.inputs.picture.settings.dynamicItems.descriptions.label'
-            )}
+            Descriptions:
           </FormLabel>
           <VariableSearchInput
             initialVariableId={options?.dynamicItems?.descriptionsVariableId}
@@ -139,7 +134,7 @@ export const PictureChoiceSettings = ({ options, onOptionsChange }: Props) => {
 
       <Stack>
         <FormLabel mb="0" htmlFor="variable">
-          {t('blocks.inputs.settings.saveAnswer.label')}
+          Save answer in a variable:
         </FormLabel>
         <VariableSearchInput
           initialVariableId={options?.variableId}

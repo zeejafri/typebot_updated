@@ -1,5 +1,6 @@
-import { z } from '../../../../zod'
+import { z } from 'zod'
 import {
+  chatCompletionMessageCustomRoles,
   chatCompletionMessageRoles,
   chatCompletionResponseValues,
   openAITasks,
@@ -17,9 +18,7 @@ const openAIBaseOptionsSchema = z.object({
 
 const initialOptionsSchema = z
   .object({
-    task: z.undefined().openapi({
-      type: 'string',
-    }),
+    task: z.undefined(),
   })
   .merge(openAIBaseOptionsSchema)
 

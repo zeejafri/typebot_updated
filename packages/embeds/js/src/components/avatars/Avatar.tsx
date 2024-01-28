@@ -8,7 +8,7 @@ export const Avatar = (props: { initialAvatarSrc?: string }) => {
 
   createEffect(() => {
     if (
-      (avatarSrc()?.startsWith('{{') || !avatarSrc()) &&
+      avatarSrc()?.startsWith('{{') &&
       props.initialAvatarSrc?.startsWith('http')
     )
       setAvatarSrc(props.initialAvatarSrc)

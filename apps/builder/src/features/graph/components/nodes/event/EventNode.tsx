@@ -19,7 +19,6 @@ import { EventNodeContent } from './EventNodeContent'
 import { EventSourceEndpoint } from '../../endpoints/EventSourceEndpoint'
 import { eventWidth } from '@/features/graph/constants'
 import { useTypebot } from '@/features/editor/providers/TypebotProvider'
-import { useGroupsStore } from '@/features/graph/hooks/useGroupsStore'
 
 type Props = {
   event: TEvent
@@ -71,7 +70,6 @@ const NonMemoizedDraggableEventNode = ({
   const eventRef = useRef<HTMLDivElement | null>(null)
   const [debouncedEventPosition] = useDebounce(currentCoordinates, 100)
   const [isFocused, setIsFocused] = useState(false)
-  const isDraggingGraph = useGroupsStore((state) => state.isDraggingGraph)
 
   useOutsideClick({
     handler: () => setIsFocused(false),
@@ -147,7 +145,6 @@ const NonMemoizedDraggableEventNode = ({
         <Stack
           ref={setMultipleRefs([ref, eventRef])}
           id={`event-${event.id}`}
-          userSelect="none"
           data-testid="event"
           py="2"
           pl="3"
@@ -174,7 +171,6 @@ const NonMemoizedDraggableEventNode = ({
           shadow="md"
           _hover={{ shadow: 'lg' }}
           zIndex={isFocused ? 10 : 1}
-          pointerEvents={isDraggingGraph ? 'none' : 'auto'}
         >
           <EventNodeContent event={event} />
           <EventSourceEndpoint

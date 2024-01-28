@@ -20,7 +20,6 @@ import { Match, Switch } from 'solid-js'
 type Props = {
   message: ChatMessage
   typingEmulation: Settings['typingEmulation']
-  isTypingSkipped: boolean
   onTransitionEnd: (offsetTop?: number) => void
   onCompleted: (reply?: string) => void
 }
@@ -39,7 +38,6 @@ export const HostBubble = (props: Props) => {
       <Match when={props.message.type === BubbleBlockType.TEXT}>
         <TextBubble
           content={props.message.content as TextBubbleBlock['content']}
-          isTypingSkipped={props.isTypingSkipped}
           typingEmulation={props.typingEmulation}
           onTransitionEnd={onTransitionEnd}
         />
